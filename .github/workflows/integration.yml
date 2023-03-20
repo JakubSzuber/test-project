@@ -15,16 +15,17 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: Get the source code
-      uses: actions/checkout@v3
+# TODO do below part after choosing the language
+#     - name: Get the source code
+#       uses: actions/checkout@v3
 
-    - name: Python Setup
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-        cache: 'pip' # caching pip dependencies
+#     - name: Python Setup
+#       uses: actions/setup-python@v4
+#       with:
+#         python-version: '3.9'
+#         cache: 'pip' # caching pip dependencies
 
-    - run: pip install -r requirements.txt
+#     - run: pip install -r requirements.txt
 
     # TODO tests
 
