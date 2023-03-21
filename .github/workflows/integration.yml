@@ -27,6 +27,18 @@ jobs:
 
 #     - run: pip install -r requirements.txt
 
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        
+    - name: Run Super-Linter
+      uses: github/super-linter@v4
+      env:
+        VALIDATE_ALL_CODEBASE: false
+        DEFAULT_BRANCH: master
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     # TODO tests
 
     - name: Login to Docker Hub
