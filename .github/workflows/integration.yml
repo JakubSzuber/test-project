@@ -2,18 +2,33 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-  build:  # This job could be executed through the ubuntu-latest, windows-latest, and macOS-latest hosted runners but it require additional changes
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        
+    - name: Run Super-Linter
+      uses: github/super-linter@v4
+      env:
+        VALIDATE_ALL_CODEBASE: false
+        DEFAULT_BRANCH: master
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  build:  # This job could be executed through the ubuntu, windows, and macOS hosted runners but it require additional changes
 #    runs-on: ${{ matrix.os }}
 #    strategy:
 #      matrix:
 #        os: [ubuntu-latest, windows-latest, macOS-latest]
     runs-on: ubuntu-22.04
-
     steps:
 # TODO do below part after choosing the language
 #     - name: Get the source code
@@ -27,6 +42,7 @@ jobs:
 
 #     - run: pip install -r requirements.txt
 
+    # TODO below action won't be required if you finishe the above part
     - name: Checkout code
       uses: actions/checkout@v3
       with:
