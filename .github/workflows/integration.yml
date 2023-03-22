@@ -63,6 +63,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    # TODO maybe you should put somewhere else this part
     - name: Build Docker image and push it if the event is direct push or merged pull request
       uses: docker/build-push-action@v4
       with:
