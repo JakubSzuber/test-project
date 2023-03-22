@@ -1,6 +1,6 @@
 name: CI
 
-on:
+onbreakfornow:
   push:
     branches: [main]
   pull_request:
