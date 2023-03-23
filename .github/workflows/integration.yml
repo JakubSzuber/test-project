@@ -4,7 +4,7 @@
 
 name: CI
 
-onn:
+on:
   push:
     branches: [main]
   pull_request:
