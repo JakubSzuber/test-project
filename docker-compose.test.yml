@@ -1,8 +1,23 @@
 version: "3.9"
 
 services:
-  app:
-    build: .
-    command: echo "Hello world"
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./healthchecks:/healthchecks
+    healthcheck:
+      test: /healthchecks/postgres-healthcheck
+      interval: "5s"
+  service1:
+    image: "${TESTING_IMAGE}"
+    depends_on:
+#      allhands22:
+#        condition: service_started
+      postgres:
+        condition: service_healthy
+    command: curl --fail http://service1:80 || exit 1
 #    ports:
 #      - "5000:5000"
