@@ -34,6 +34,8 @@ jobs:
 #        os: [ubuntu-latest, windows-latest, macOS-latest]
     runs-on: ubuntu-22.04
     permissions:
+      contents: read  # Obtain permission needed for actions/checkout to fetch code
+      security-events: write  # Obtain permission needed for github/codeql-action/upload-sarif to upload SARIF results
       pull-requests: write  # Obtain permission needed to create and update comments in PRs
     steps:
 # TODO do below part after choosing the language
@@ -100,6 +102,23 @@ jobs:
         image-ref: ${{ github.run_id }}
         exit-code: 0
         format: table 
+
+    - name: Run Trivy for HIGH,CRITICAL CVEs and report (blocking)
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ${{ github.run_id }}
+        exit-code: 1
+        ignore-unfixed: true
+        vuln-type: 'os,library'
+        severity: 'HIGH,CRITICAL'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+
+    - name: Upload Trivy scan results to GitHub Security tab
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
 
     - name: Docker meta  # Add multiple tags to the image
       id: docker_meta
