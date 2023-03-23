@@ -1,4 +1,5 @@
-FROM node:16  # Later change to a lighter image
+FROM node:16
+# Later change to a lighter image
 
 WORKDIR /app
 
