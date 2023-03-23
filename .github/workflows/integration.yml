@@ -147,7 +147,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         push: true
-        tags: ghcr.io/bretfisher/docker-ci-automation:${{ github.run_id }}
+        tags: ghcr.io/JakubSzuber/testing_image:${{ github.run_id }}
         #target: test
         cache-from: type=gha
         cache-to: type=gha,mode=max
