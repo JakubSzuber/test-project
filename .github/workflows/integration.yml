@@ -90,6 +90,10 @@ jobs:
         cache-to: type=gha,mode=max
         platforms: linux/amd64
 
+    - name: Test
+      run: |
+        docker run --rm ${{ github.run_id }}
+
     - name: Run Trivy for all CVEs (non-blocking)  # Gain an additional overview of the vulnerabilities
       uses: aquasecurity/trivy-action@master
       with:
