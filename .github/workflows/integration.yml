@@ -84,7 +84,8 @@ jobs:
         flavor: |
           latest=true
         tags: |
-          type=raw,value=1.01
+          type=semver,pattern={{version}},value=v1.0.0
+          type=semver,pattern={{major}}.{{minor}},value=v1.0.0
           type=ref,event=pr
           type=sha
           type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='GMT+1'}}
