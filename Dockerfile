@@ -1,13 +1,11 @@
-FROM nginx:1.20-alpine as base
+FROM node:16  # Later change to a lighter image
 
-RUN apk add --no-cache curl
+WORKDIR /usr/src/app
 
-WORKDIR /test
+COPY package*.json app.js ./
 
-COPY . .
+RUN npm install
 
+EXPOSE 80
 
-#########################
-FROM alpine:latest
-
-CMD echo "Hello, World!"
+CMD ["node", "app.js"]
