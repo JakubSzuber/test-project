@@ -1,6 +1,8 @@
 version: "3.9"
 
 services:
+  todo:
+    image: "${TESTING_IMAGE}"
   postgres:
     image: postgres
     environment:
@@ -14,10 +16,10 @@ services:
   service1:
     image: "${TESTING_IMAGE}"
     depends_on:
-#      allhands22:
-#        condition: service_started
+      todo:
+        condition: service_started
       postgres:
         condition: service_healthy
-    command: curl --fail http://service1:80 || exit 1
+    command: curl --fail http://todo:80 || exit 1
 #    ports:
 #      - "5000:5000"
