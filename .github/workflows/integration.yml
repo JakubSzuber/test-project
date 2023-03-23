@@ -87,14 +87,19 @@ jobs:
         push: false
         load: true # Export to Docker Engine rather than pushing to a registry
         tags: ${{ github.run_id }}
-        target: test
+        #target: test
         cache-from: type=gha
         cache-to: type=gha,mode=max
         platforms: linux/amd64
 
     - name: Unit Testing in Docker
       run: |
-        docker run --rm ${{ github.run_id }} echo "run test commands here"  # TODO add here testing commands when you choose the language
+        docker run --rm ${{ github.run_id }} echo "run test commands here"  # TODO add here unit testing commands when you choose the language
+
+    - name: Test healthcheck in Docker Compose
+      run: |
+        export TESTING_IMAGE="${{ github.run_id }}"
+        docker compose -f docker-compose.test.yml up --exit-code-from sut
 
     - name: Run Trivy for all CVEs (non-blocking)  # Gain an additional overview of the vulnerabilities
       uses: aquasecurity/trivy-action@master
