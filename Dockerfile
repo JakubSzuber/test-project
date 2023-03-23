@@ -1,8 +1,8 @@
 FROM node:16  # Later change to a lighter image
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json app.js ./
+COPY package*.json app.js /app
 
 RUN npm install
 
