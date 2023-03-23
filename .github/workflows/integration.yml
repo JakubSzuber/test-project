@@ -42,6 +42,7 @@ jobs:
       contents: read  # Obtain permission needed for actions/checkout to fetch code
       security-events: write  # Obtain permission needed for github/codeql-action/upload-sarif to upload SARIF results
       pull-requests: write  # Obtain permission needed to create and update comments in PRs
+      packages: write  # Obtain permission needed to push docker image to ghcr.io
     steps:
 # TODO do below part after choosing the language
 #     - name: Get the source code
