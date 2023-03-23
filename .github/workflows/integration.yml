@@ -79,6 +79,24 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    - name: Build and export to Docker  # Test image building
+      uses: docker/build-push-action@v4
+      with:
+        push: false
+        load: true # Export to Docker Engine rather than pushing to a registry
+        tags: ${{ github.run_id }}
+        target: test
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+        platforms: linux/amd64
+
+    - name: Run Trivy for all CVEs (non-blocking)  # Gain an additional overview of the vulnerabilities
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: ${{ github.run_id }}
+        exit-code: 0
+        format: table 
+
     - name: Docker meta  # Add multiple tags to the image
       id: docker_meta
       uses: docker/metadata-action@v4
@@ -89,7 +107,7 @@ jobs:
         tags: |
           type=semver,pattern={{version}},value=v1.0.0
           type=semver,pattern={{major}}.{{minor}},value=v1.0.0
-          type=ref,event=pr
+          type=ref,event=pr  # TODO maybe delete this line
           type=sha
           type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='GMT+1'}}
 
