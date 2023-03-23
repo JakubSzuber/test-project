@@ -4,7 +4,7 @@
 
 name: CI
 
-onn:
+on:
   push:
     branches: [main]
   pull_request:
@@ -15,17 +15,22 @@ jobs:
     runs-on: ubuntu-22.04
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-        
-    - name: Run Super-Linter
-      uses: github/super-linter@v4
-      env:
-        VALIDATE_ALL_CODEBASE: false
-        DEFAULT_BRANCH: master
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - run: npm ci
+
+      - name: Run Super-Linter
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-push-docker:  # This job could be executed through the ubuntu, windows, and macOS hosted runners but it require additional changes
 #    runs-on: ${{ matrix.os }}
@@ -59,8 +64,13 @@ jobs:
     # TODO below action won't be required if you finishe the above part
     - name: Checkout code
       uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
       with:
-        fetch-depth: 0
+        node-version: 16
+
+    - run: npm ci
 
     # TODO unit tests - make separate job for it and if it's possible run it in parallel
     
@@ -94,7 +104,7 @@ jobs:
 
     - name: Unit Testing in Docker
       run: |
-        docker run --rm ${{ github.run_id }} echo "run test commands here"  # TODO add here unit testing commands when you choose the language
+        docker run --rm ${{ github.run_id }} echo "run test commands here"  # TODO add here  npm test
 
     - name: Test healthcheck in Docker Compose
       run: |
