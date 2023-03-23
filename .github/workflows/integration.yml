@@ -76,11 +76,25 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    - name: Docker meta  # Add multiple tags to the image
+      id: docker_meta
+      uses: docker/metadata-action@v4
+      with:
+        images: JakubSzuber/testing_image
+        flavor: |
+          latest=true
+        tags: |
+          type=raw,value=1.01
+          type=ref,event=pr
+          type=sha
+          type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='GMT+1'}}
+
     - name: Build Docker image and push it if the event is direct push or merged pull request
       uses: docker/build-push-action@v4
       with:
         push: ${{ github.event_name != 'pull_request' }}
-        tags: jakubszuber/testing_image:latest,jakubszuber/testing_image:1.01
+        tags: ${{ steps.docker_meta.outputs.tags }}
+        labels: ${{ steps.docker_meta.outputs.labels }}
         cache-from: type=gha  # Use cached image layers to reduce image building time
         cache-to: type=gha,mode=max
         platforms: linux/amd64,linux/arm64,linux/arm/v7
