@@ -4,7 +4,7 @@
 
 name: CI
 
-on:
+onn:
   push:
     branches: [main]
   pull_request:
@@ -46,25 +46,6 @@ jobs:
       pull-requests: write  # Obtain permission needed to create and update comments in PRs
       packages: write  # Obtain permission needed to push docker image to ghcr.io
     steps:
-# TODO do below part after choosing the language
-#     - name: Get the source code
-#       uses: actions/checkout@v3
-
-#     - name: Python Setup
-#       uses: actions/setup-python@v4
-#       with:
-#         python-version: '3.9'
-#         cache: 'pip' # caching pip dependencies
-
-#     - run: pip install -r requirements.txt
-
-#todo not sure about this part
-#    - name: Run unit tests
-#      run: |
-#        python -m unittest discover tests/
-
-
-    # TODO below action won't be required if you finishe the above part
     - name: Checkout code
       uses: actions/checkout@v3
 
@@ -76,12 +57,9 @@ jobs:
     - run: npm ci
 
     # TODO unit tests - make separate job for it and if it's possible run it in parallel
-    
-    # TODO integration tests (probably with docker compose) - make separate job for it and if it's possible run it in parallel
 
     # TODO CVE scanning (Snyk, Trivy, AWS CodeGuru) - make separate job for it and if it's possible run it in parallel
 
-    # TODO maybe you should put somewhere else those part
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
     
@@ -98,7 +76,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
         push: false
-        load: true # Export to Docker Engine rather than pushing to a registry
+        load: true  # Export to Docker Engine rather than pushing to a registry
         tags: ${{ github.run_id }}
         #target: test  # Here you can specify part of your dockerfile if you use multi-stage builds in your Dockerfile
         cache-from: type=gha
