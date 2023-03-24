@@ -107,10 +107,10 @@ jobs:
       run: |
         docker run --rm ${{ github.run_id }} echo "run test commands here"  # TODO add here  npm test
 
-#    - name: Test healthcheck in Docker Compose
-#      run: |
-#        export TESTING_IMAGE="${{ github.run_id }}"
-#        docker compose -f docker-compose.test.yml up --exit-code-from service1
+    - name: Test healthcheck in Docker Compose
+      run: |
+        export TESTING_IMAGE="${{ github.run_id }}"
+        docker compose -f docker-compose.test.yml up --exit-code-from service1
 
     - name: Run Trivy for all CVEs (non-blocking)  # Gain an additional overview of the vulnerabilities
       uses: aquasecurity/trivy-action@master
