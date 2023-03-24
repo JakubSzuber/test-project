@@ -4,7 +4,7 @@
 
 name: CI
 
-onn:
+on:
   push:
     branches: [main]
   pull_request:
@@ -170,6 +170,8 @@ jobs:
         export TESTING_IMAGE=ghcr.io/jakubszuber/testing_image:"$GITHUB_RUN_ID"
         envsubst < manifests/deployment.yaml  | kubectl apply -f -
         kubectl rollout status deployment myapp
+        sleep 15
+        kubectl get all
         kubectl exec deploy/myapp -- curl --fail localhost
 
     - name: Docker meta  # Add multiple tags to the image
