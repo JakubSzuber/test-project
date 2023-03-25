@@ -5,7 +5,3 @@ linter:
       enabled: true
       ignore:
         - "**/integration.yml"
-    yamllint:
-      enabled: true
-      ignore:
-        - "**/integration.yml"
