@@ -15,6 +15,12 @@ services:
     healthcheck:
       test: /healthchecks/postgres-healthcheck
       interval: "5s"
+#     environment:
+#       - POSTGRES_USER=admin
+#       - POSTGRES_PASSWORD=admin
+#       - POSTGRES_DB=flask_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
   service1:
     image: "${TESTING_IMAGE}"
     depends_on:
