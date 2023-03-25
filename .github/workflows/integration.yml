@@ -58,7 +58,7 @@ jobs:
 
     # TODO unit tests - make separate job for it and if it's possible run it in parallel
 
-    # TODO CVE scanning (Snyk, Trivy, AWS CodeGuru) - make separate job for it and if it's possible run it in parallel
+    # TODO code scanning/reviewing (Snyk, Trivy, AWS CodeGuru, Datree) - make separate job for it and if it's possible run it in parallel
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
