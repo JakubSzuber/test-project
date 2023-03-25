@@ -1,3 +1,4 @@
+---
 # Complete workflow reponsible for integration in our CI/CD pipeline
 
 name: CI
@@ -30,7 +31,7 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILTER_REGEX_EXCLUDE: .*/.github/workflows/integration.yml
+          FILTER_REGEX_EXCLUDE: .*/.github/workflows/integration.yml  # Exclude the workflow file
 
   # This job could be executed through the ubuntu, windows, and macOS hosted runners but it require additional changes
   build-test-image:  
@@ -102,7 +103,7 @@ jobs:
       
       - name: Unit Testing in Docker
         run: |
-          docker run --rm ghcr.io/jakubszuber/testing_image:"$GITHUB_RUN_ID" echo "run test commands here"  # TODO add here  npm test
+          docker run --rm ghcr.io/jakubszuber/testing_image:"$GITHUB_RUN_ID" echo "nmp test"  # TODO add here  npm test
 
   test-integration:
     name: Integration tests in Compose
@@ -180,6 +181,9 @@ jobs:
           kubectl rollout status deployment myapp
           sleep 15
           kubectl get all
+          
+      - name: Test deployment
+        run: |
           kubectl exec deploy/myapp -- curl --fail localhost
 
   scan-image-Trivy:
@@ -278,7 +282,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}},value=v1.0.0
             type=ref,event=pr  # TODO maybe delete this line and if not then ensure that tag is used
             type=sha
-            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}  # TODO ensure that tag is used
+            type=schedule,enable=true,priority=1000,prefix=,suffix=,pattern=nightly  # TODO ensure that tag is used
 
       - name: Build Docker image and push it to GHCR and Docker Hub if the event is direct push or merged pull request
         uses: docker/build-push-action@v4
