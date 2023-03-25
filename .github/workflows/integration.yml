@@ -178,7 +178,7 @@ jobs:
 
   scan-image-Trivy:
     name: Scan Image with Trivy
-    needs: [build-test-image]
+    needs: [build-test-image, test-integration]
     runs-on: ubuntu-latest
 
     permissions:
@@ -273,7 +273,7 @@ jobs:
             type=ref,event=pr  # TODO maybe delete this line
             type=sha
             type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}
-      
+
       - name: Build Docker image and push it to GHCR and Docker Hub if the event is direct push or merged pull request
         uses: docker/build-push-action@v4
         with:
