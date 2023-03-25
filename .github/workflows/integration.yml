@@ -283,6 +283,9 @@ jobs:
             type=ref,event=pr  # TODO maybe delete this line and if not then ensure that tag is used
             type=sha
             type=schedule,enable=true,priority=1000,prefix=,suffix=,pattern=nightly  # TODO ensure that tag is used
+            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}
+            type=schedule,enable=true,priority=1000,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}
+            type=custom,value=$(date +'%Y%m%d-%H%M%S-%Z')
 
       - name: Build Docker image and push it to GHCR and Docker Hub if the event is direct push or merged pull request
         uses: docker/build-push-action@v4
