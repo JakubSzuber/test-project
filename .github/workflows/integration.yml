@@ -240,7 +240,7 @@ jobs:
 
   build-final-image:
     name: Build Final Image
-    needs: [test-unit, test-integration, test-k3d, scan-image-Trivy]
+    needs: [lint, test-unit, test-integration, test-k3d, scan-image-Trivy]
     runs-on: ubuntu-latest
 
     permissions:
@@ -277,9 +277,9 @@ jobs:
           tags: |
             type=semver,pattern={{version}},value=v1.0.0
             type=semver,pattern={{major}}.{{minor}},value=v1.0.0
-            type=ref,event=pr  # TODO maybe delete this line
+            type=ref,event=pr  # TODO maybe delete this line and if not then ensure that tag is used
             type=sha
-            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}
+            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}  # TODO ensure that tag is used
 
       - name: Build Docker image and push it to GHCR and Docker Hub if the event is direct push or merged pull request
         uses: docker/build-push-action@v4
