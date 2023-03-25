@@ -1,8 +1,5 @@
----
-# Disable the duplication rule only for the integration.yml file
-linter:
-  rules:
-    duplication:
-      enabled: true
-      ignore:
-        - "**/.github/workflows/integration.yml"
+# Disable duplication lines error only for the '.github/workflows/integration.yml' file
+duplicate_code:
+  enabled: true
+  exclude:
+    - "**/.github/workflows/integration.yml"
