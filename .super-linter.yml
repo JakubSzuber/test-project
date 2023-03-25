@@ -1,5 +1,0 @@
-# Disable duplication lines error only for the '.github/workflows/integration.yml' file
-duplicate_code:
-  enabled: true
-  exclude:
-    - "**/.github/workflows/integration.yml"
