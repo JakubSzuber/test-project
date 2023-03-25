@@ -15,7 +15,7 @@ services:
       - ./healthchecks:/healthchecks
       # - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD", "/healthchecks/postgres-healthcheck" ]
+      test: /healthchecks/postgres-healthcheck
       interval: 10s
       timeout: 3s
       retries: 3
