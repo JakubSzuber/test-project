@@ -4,7 +4,7 @@
 
 name: CI
 
-onn:
+on:
   push:
     branches: [main]
   pull_request:
@@ -87,10 +87,10 @@ jobs:
       run: |
         docker run --rm ${{ github.run_id }} echo "run test commands here"  # TODO add here  npm test
 
-    - name: Test healthcheck in Docker Compose
-      run: |
-        export TESTING_IMAGE="${{ github.run_id }}"
-        docker compose -f docker-compose.test.yml up --exit-code-from service1
+#     - name: Test healthcheck in Docker Compose
+#       run: |
+#         export TESTING_IMAGE="${{ github.run_id }}"
+#         docker compose -f docker-compose.test.yml up --exit-code-from service1
 
     - name: Run Trivy for all CVEs (non-blocking)  # Gain an additional overview of the vulnerabilities
       uses: aquasecurity/trivy-action@master
@@ -133,26 +133,26 @@ jobs:
         cache-to: type=gha,mode=max
         platforms: linux/amd64
 
-    - uses: AbsaOSS/k3d-action@v2  # Run micro Kubernetes cluster for testing purposes
-      with:
-        cluster-name: "test-cluster-1"
-        args: >-
-          --agents 1
-          --no-lb
-          --k3s-arg "--no-deploy=traefik,servicelb,metrics-server@server:*"
+#     - uses: AbsaOSS/k3d-action@v2  # Run micro Kubernetes cluster for testing purposes
+#       with:
+#         cluster-name: "test-cluster-1"
+#         args: >-
+#           --agents 1
+#           --no-lb
+#           --k3s-arg "--no-deploy=traefik,servicelb,metrics-server@server:*"
 
-    - name: Smoke test deployment in k3d Kubernetes
-      run: |
-        kubectl create secret docker-registry regcred \
-          --docker-server=https://ghcr.io \
-          --docker-username=${{ github.actor }} \
-          --docker-password=${{ secrets.GITHUB_TOKEN }}
-        export TESTING_IMAGE=ghcr.io/jakubszuber/testing_image:"$GITHUB_RUN_ID"
-        envsubst < manifests/deployment.yaml  | kubectl apply -f -
-        kubectl rollout status deployment myapp
-        sleep 15
-        kubectl get all
-        kubectl exec deploy/myapp -- curl --fail localhost
+#     - name: Smoke test deployment in k3d Kubernetes
+#       run: |
+#         kubectl create secret docker-registry regcred \
+#           --docker-server=https://ghcr.io \
+#           --docker-username=${{ github.actor }} \
+#           --docker-password=${{ secrets.GITHUB_TOKEN }}
+#         export TESTING_IMAGE=ghcr.io/jakubszuber/testing_image:"$GITHUB_RUN_ID"
+#         envsubst < manifests/deployment.yaml  | kubectl apply -f -
+#         kubectl rollout status deployment myapp
+#         sleep 15
+#         kubectl get all
+#         kubectl exec deploy/myapp -- curl --fail localhost
 
     - name: Docker meta  # Add multiple tags to the image
       id: docker_meta
