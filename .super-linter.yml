@@ -1,0 +1,5 @@
+linter:
+  duplication:
+    enabled: true
+    exclude:
+      - .github/workflows/integration.yml
