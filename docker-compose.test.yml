@@ -12,6 +12,7 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - ./healthchecks:/healthchecks
+#      - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: /healthchecks/postgres-healthcheck
       interval: "5s"
@@ -19,8 +20,6 @@ services:
 #       - POSTGRES_USER=admin
 #       - POSTGRES_PASSWORD=admin
 #       - POSTGRES_DB=flask_db
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
   service1:
     image: "${TESTING_IMAGE}"
     depends_on:
