@@ -3,7 +3,7 @@
 
 name: CI
 
-on:
+onn:
   push:
     branches: [main]
   pull_request:
@@ -282,10 +282,9 @@ jobs:
             type=semver,pattern={{major}}.{{minor}},value=v1.0.0
             type=ref,event=pr  # TODO maybe delete this line and if not then ensure that tag is used
             type=sha
-            type=schedule,enable=true,priority=1000,prefix=,suffix=,pattern=nightly  # TODO ensure that tag is used
-            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}
-            type=schedule,enable=true,priority=1000,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}
+            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}  # TODO ensure that tag is used
 
+      # TODO Make sure that below part is fully logical
       - name: Build Docker image and push it to GHCR and Docker Hub if the event is direct push or merged pull request
         uses: docker/build-push-action@v4
         with:
