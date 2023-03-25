@@ -3,8 +3,9 @@ version: "3.9"
 services:
   todo:
     image: "${TESTING_IMAGE}"
-#     ports:
-#       - "80:80"
+    # ports:
+    #   - "80:80"
+
   postgres:
     image: postgres
     environment:
@@ -12,23 +13,21 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - ./healthchecks:/healthchecks
-#      - postgres_data:/var/lib/postgresql/data
+      # - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: /healthchecks/postgres-healthcheck
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 3s
       retries: 3
-#     environment:
-#       - POSTGRES_USER=admin
-#       - POSTGRES_PASSWORD=admin
-#       - POSTGRES_DB=flask_db
+
   service1:
     image: "${TESTING_IMAGE}"
     depends_on:
       todo:
         condition: service_started
       postgres:
-        condition: service_healthy  # TODO maybe change to "condition: service_healthy"
+        condition: service_healthy
     command: curl --fail http://todo:80 || exit 1
-#    ports:
-#      - "5000:5000"
+
+# volumes:
+#   postgres_data: {}
