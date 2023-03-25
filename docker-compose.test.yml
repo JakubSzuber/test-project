@@ -13,12 +13,9 @@ services:
       POSTGRES_PASSWORD: postgres
     volumes:
       - ./healthchecks:/healthchecks
-      # - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: /healthchecks/postgres-healthcheck
-      interval: 10s
-      timeout: 3s
-      retries: 3
+      interval: "5s"
 
   service1:
     image: "${TESTING_IMAGE}"
