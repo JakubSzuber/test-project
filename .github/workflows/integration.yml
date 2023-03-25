@@ -185,7 +185,7 @@ jobs:
 
   scan-image-Trivy:
     name: Scan Image with Trivy
-    needs: [build-test-image, test-integration]
+    needs: [build-test-image]
     runs-on: ubuntu-latest
 
     permissions:
