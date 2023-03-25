@@ -1,5 +1,10 @@
-linter:
-  duplication:
-    enabled: true
-    exclude:
-      - "**/.github/workflows/integration.yml"
+# .super-linter.yml
+
+# Default settings for all files
+linters:
+  # ...
+
+# Exception for the integration.yml file
+integration.yml:
+  disabled_rules:
+    - clone-lines
