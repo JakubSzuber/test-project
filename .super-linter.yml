@@ -1,0 +1,11 @@
+# Disable the duplication rule only for the integration.yml file
+linter:
+  rules:
+    duplication:
+      enabled: true
+      ignore:
+        - "**/integration.yml"
+    yamllint:
+      enabled: true
+      ignore:
+        - "**/integration.yml"
