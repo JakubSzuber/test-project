@@ -5,4 +5,4 @@ linter:
     duplication:
       enabled: true
       ignore:
-        - "**/integration.yml"
+        - "**/.github/workflows/integration.yml"
