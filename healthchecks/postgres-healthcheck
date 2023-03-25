@@ -1,9 +1,8 @@
 #!/bin/bash
 
-exit 0
-
-
 set -eo pipefail
+
+exit 0
 
 host="$(hostname -i || echo '127.0.0.1')"
 user="${POSTGRES_USER:-postgres}"
