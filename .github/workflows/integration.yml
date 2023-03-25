@@ -2,7 +2,7 @@
 
 name: CI
 
-on:
+onn:
   push:
     branches: [main]
   pull_request:
@@ -30,6 +30,10 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          lint-file: true
+          fileExtensions: |
+            .js
 
   # This job could be executed through the ubuntu, windows, and macOS hosted runners but it require additional changes
   build-test-image:  
