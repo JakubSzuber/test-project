@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./healthchecks:/healthchecks
+    healthcheck:
+      test: /healthchecks/postgres-healthcheck
+      interval: "5s"
+
+  service1:
+    build:
+      context: .
+      # build to the stage named dev
+      target: dev
+    # build to the stage named dev
+    target: dev
+    volumes:
+      - .:/app
+    ports:
+      # use "docker compose ps" to see which host port is used
+      - "80"
+    depends_on:
+      postgres:
+        condition: service_started  # TODO change to "service_healthy" after fixing the bug
+
+# volumes:
+#   postgres_data: {}
