@@ -15,8 +15,6 @@ services:
       context: .
       # build to the stage named dev
       target: dev
-    # build to the stage named dev
-    target: dev
     volumes:
       - .:/app
     ports:
