@@ -3,7 +3,7 @@
 
 name: CI
 
-on:
+onn:
   push:
     branches: [main]
   pull_request:
@@ -263,7 +263,7 @@ jobs:
         id: docker_meta
         uses: docker/metadata-action@v4
         with:
-          images: JakubSzuber/testing_image
+          images: ghcr.io/jakubszuber/testing_image,JakubSzuber/testing_image
           flavor: |
             latest=true
           tags: |
