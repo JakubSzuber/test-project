@@ -1,0 +1,43 @@
+name: CD  # Deploy to staging environment and do smoke tests
+
+on:  # Trigger on integration.yml success (merged pull request or direct push)
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+#     branches:
+#       - main
+    # Only trigger if the previous workflow run was successful and the event was not a pull request
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event != 'pull_request'
+
+jobs:
+  deploy-to-ec2:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Echo Working
+      run: echo "Working!"
+
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Extract Docker image tag
+#         id: extract-tag
+#         uses: docker/metadata-action@v3
+#         with:
+#           images: my-image
+#           tags: ${{ github.event.client_payload.tag }}
+
+#       - name: Deploy Docker container to EC2 instance
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.EC2_HOST }}
+#           username: ${{ secrets.EC2_USERNAME }}
+#           key: ${{ secrets.EC2_PRIVATE_KEY }}
+#           port: ${{ secrets.EC2_PORT }}
+#           script: |
+#             docker stop my-container || true
+#             docker rm my-container || true
+#             docker pull my-image:${{ steps.extract-tag.outputs.tags }}
+#             docker run -d --name my-container -p 80:80 my-image:${{ steps.extract-tag.outputs.tags }}
