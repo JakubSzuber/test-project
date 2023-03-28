@@ -3,7 +3,8 @@
 
 name: CD
 
-on:  # Trigger on integration.yml success (merged pull request or direct push)
+on:  # Trigger automatically on integration.yml success (merged pull request or direct push)
+  workflow_dispatch:
   workflow_run:
     workflows: [CI]
     types: [completed]
@@ -13,7 +14,9 @@ on:  # Trigger on integration.yml success (merged pull request or direct push)
 jobs:
   # Only trigger if the previous workflow run was successful and the event was not a pull request
   deploy-to-ec2:
-    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event != 'pull_request'}}
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event != 'pull_request'
     runs-on: ubuntu-latest
 
     steps:
