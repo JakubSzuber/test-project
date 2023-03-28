@@ -1,4 +1,7 @@
-name: CD  # Deploy to staging environment and do smoke tests
+---
+# Deploy to staging environment and do smoke tests
+
+name: CD
 
 on:  # Trigger on integration.yml success (merged pull request or direct push)
   workflow_run:
@@ -6,13 +9,11 @@ on:  # Trigger on integration.yml success (merged pull request or direct push)
     types: [completed]
 #     branches:
 #       - main
-    # Only trigger if the previous workflow run was successful and the event was not a pull request
-    if: >
-      github.event.workflow_run.conclusion == 'success' &&
-      github.event.workflow_run.event != 'pull_request'
 
 jobs:
+  # Only trigger if the previous workflow run was successful and the event was not a pull request
   deploy-to-ec2:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event != 'pull_request'}}
     runs-on: ubuntu-latest
 
     steps:
