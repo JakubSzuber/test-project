@@ -3,15 +3,17 @@
 
 name: CI
 
-on:
+onn:
+  workflow_dispatch:
   push:
     branches: [main]
+    paths-ignore:
+      - 'README.md'
   pull_request:
     branches: [main]
 
 jobs:
   lint:
-    name: Lint all software
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
