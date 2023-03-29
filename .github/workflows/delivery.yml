@@ -3,6 +3,8 @@
 
 name: CD
 
+concurrency: staging
+
 on:  # Trigger automatically on integration.yml success (merged pull request or direct push)
   workflow_dispatch:
   workflow_run:
