@@ -3,6 +3,8 @@
 
 name: CI
 
+concurrency: development
+
 onn:
   workflow_dispatch:
   push:
