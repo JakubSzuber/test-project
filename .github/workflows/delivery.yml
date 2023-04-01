@@ -10,8 +10,7 @@ onn:  # Trigger automatically on integration.yml success (merged pull request or
   workflow_run:
     workflows: [CI]
     types: [completed]
-#     branches:
-#       - main
+#     branches: [$default-branch]
 
 env:
   AWS_REGION: us-east-2
