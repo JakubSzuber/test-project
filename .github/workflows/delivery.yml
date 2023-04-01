@@ -17,7 +17,7 @@ env:
   ECS_SERVICE: my-service
   ECS_CLUSTER: initial-cluster
   ECS_TASK_DEFINITION: .aws/ecs-task-definition.json
-  CONTAINER_NAME: "some-nginx"
+  CONTAINER_NAME: some-nginx
 
 permissions:
   contents: read
