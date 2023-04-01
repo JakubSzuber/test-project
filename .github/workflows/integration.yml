@@ -8,11 +8,11 @@ concurrency: development
 onn:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [$default-branch]
     paths-ignore:
       - 'README.md'
   pull_request:
-    branches: [main]
+    branches: [$default-branch]
 
 jobs:
   lint:
