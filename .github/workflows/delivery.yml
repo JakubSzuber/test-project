@@ -10,14 +10,14 @@ on:  # Trigger automatically on integration.yml success (merged pull request or 
   workflow_run:
     workflows: [CI]
     types: [completed]
-#     branches: [$default-branch]
+#     branches: [main]
 
 env:
   AWS_REGION: us-east-2
   ECS_SERVICE: my-service
   ECS_CLUSTER: initial-cluster
   ECS_TASK_DEFINITION: .aws/ecs-task-definition.json
-  CONTAINER_NAME: some-nginx
+  CONTAINER_NAME: "some-nginx"
 
 permissions:
   contents: read
