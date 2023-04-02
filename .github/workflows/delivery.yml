@@ -32,8 +32,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Echo Working          # TODO Temporary
-        run: echo ${{ env.IMAGE_TAG }}
+      - name: Print the used tag
+        run: echo "To staging environmnet is deployed container with image tag  sha-${{ env.IMAGE_TAG }}"
     
       - name: Checkout
         uses: actions/checkout@v3
@@ -79,6 +79,7 @@ jobs:
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
           
+          # TODO add some smoke test maybe by codeguru or just simply use some command that will check the status of the task or do "curl" on container
           
 #   - name: Echo Working
 #     run: echo "Working!"
