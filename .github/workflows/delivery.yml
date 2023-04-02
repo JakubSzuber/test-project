@@ -32,6 +32,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Echo Working          # TODO Temporary
+        run: echo ${{ env.IMAGE_TAG }}
+    
       - name: Checkout
         uses: actions/checkout@v3
 
