@@ -18,6 +18,7 @@ env:
   ECS_CLUSTER: initial-cluster
   ECS_TASK_DEFINITION: .aws/ecs-task-definition.json
   CONTAINER_NAME: some-nginx
+  IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
 
 permissions:
   contents: read
@@ -29,8 +30,6 @@ jobs:
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.event != 'pull_request'
     runs-on: ubuntu-latest
-    env:
-      IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
 
     steps:
       - name: Checkout
