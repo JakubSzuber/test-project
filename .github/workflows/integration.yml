@@ -5,7 +5,7 @@ name: CI
 
 concurrency: development
 
-on:
+onn:
   workflow_dispatch:
   push:
     branches: [main]
@@ -277,9 +277,9 @@ jobs:
           tags: |
             type=semver,pattern={{version}},value=v1.0.0
             type=semver,pattern={{major}}.{{minor}},value=v1.0.0
-            type=ref,event=pr
+            type=ref,event=pr  # TODO make sure this tag makes sense and is added
             type=sha,format=long
-            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}
+            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}  # TODO make sure this tag is added
 
       # TODO Make sure that below part is fully logical
       - name: Build Docker image and push it to GHCR and Docker Hub if the event is direct push or merged pull request
