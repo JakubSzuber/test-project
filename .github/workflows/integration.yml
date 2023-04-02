@@ -100,7 +100,7 @@ jobs:
       
       - name: Unit Testing in Docker
         run: |
-          docker run --rm ghcr.io/jakubszuber/testing_image:"$GITHUB_RUN_ID" echo "nmp test"  # TODO add here  npm test
+          docker run --rm ghcr.io/jakubszuber/testing_image:"$GITHUB_RUN_ID" echo "nmp test"  # TODO add CORRECTLY here  npm test
 
   test-integration:
     name: Integration tests in Compose
@@ -277,9 +277,9 @@ jobs:
           tags: |
             type=semver,pattern={{version}},value=v1.0.0
             type=semver,pattern={{major}}.{{minor}},value=v1.0.0
-            type=ref,event=pr  # TODO maybe delete this line and if not then ensure that tag is used
-            type=sha
-            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}  # TODO ensure that tag is used
+            type=ref,event=pr
+            type=sha,format=long
+            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}
 
       # TODO Make sure that below part is fully logical
       - name: Build Docker image and push it to GHCR and Docker Hub if the event is direct push or merged pull request
@@ -320,6 +320,3 @@ jobs:
             ${{ steps.docker_meta.outputs.labels }}
             ```
           edit-mode: replace
-
-    outputs:
-      IMAGE_TAG: ${{ github.sha }}
