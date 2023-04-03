@@ -21,7 +21,8 @@ env:
   IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
 
 permissions:
-  contents: read
+  contents: read    # This is required for actions/checkout
+  id-token: write   # This is required for requesting the JWT
 
 jobs:
   # Only trigger if the previous workflow run was successful and the event was not a pull request
@@ -41,8 +42,10 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@13d241b293754004c80624b5567555c4a39ffbe3
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          #aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          #aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::152691795422:role/gh-action-role
+          role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
 
 #  XXXXXXXXXXXXXXXXXXXXXXXXXX
