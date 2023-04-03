@@ -5,7 +5,7 @@ name: CI
 
 concurrency: development
 
-onn:
+on:
   workflow_dispatch:
   push:
     branches: [main]
