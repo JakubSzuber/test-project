@@ -20,10 +20,6 @@ env:
   CONTAINER_NAME: some-nginx
   IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
 
-permissions:
-  contents: read    # This is required for actions/checkout
-  id-token: write   # This is required for requesting the JWT
-
 jobs:
   # Only trigger if the previous workflow run was successful and the event was not a pull request
   deploy-to-ec2:
@@ -31,6 +27,9 @@ jobs:
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.event != 'pull_request'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read    # This is required for actions/checkout
+      id-token: write   # This is required for requesting the JWT
 
     steps:
       - name: Print the used tag
