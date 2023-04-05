@@ -32,7 +32,7 @@ jobs:
       id-token: write   # This is required for requesting the JWT
     environment: 
       name: Staging
-      url: https://pl.wikipedia.org/wiki/Kot_domowy
+      url: https://m.wsj.net/video/20180907/090718muskpot1/090718muskpot1_1920x1080.jpg  # You can add here public IPv4 of your task
 
     steps:
       - name: Print the used tag
@@ -48,7 +48,7 @@ jobs:
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
 
-#  XXXXXXXXXXXXXXXXXXXXXXXXXX
+#  Optionally you can use ECR instead of Docker Hub (then you will have to change a lot in CI and CD workflow)
 #       - name: Login to Amazon ECR
 #         id: login-ecr
 #         uses: aws-actions/amazon-ecr-login@aaf69d68aa3fb14c1d5a6be9ac61fe15b48453a2
@@ -72,7 +72,7 @@ jobs:
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: ${{ env.CONTAINER_NAME }}
-          image: docker.io/jakubszuber/testing_image:sha-${{ env.IMAGE_TAG }}  # TODO change the imageXXXXXXXXXXXXXXXXXXXXXXXXXX
+          image: docker.io/jakubszuber/testing_image:sha-${{ env.IMAGE_TAG }}  # Use just created image by the CI workflow
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1.4.11
@@ -83,29 +83,3 @@ jobs:
           wait-for-service-stability: true
           
           # TODO add some smoke test maybe by codeguru or just simply use some command that will check the status of the task or do "curl" on container
-          
-#   - name: Echo Working
-#     run: echo "Working!"
-
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-
-#       - name: Extract Docker image tag
-#         id: extract-tag
-#         uses: docker/metadata-action@v3
-#         with:
-#           images: my-image
-#           tags: ${{ github.event.client_payload.tag }}
-
-#       - name: Deploy Docker container to EC2 instance
-#         uses: appleboy/ssh-action@master
-#         with:
-#           host: ${{ secrets.EC2_HOST }}
-#           username: ${{ secrets.EC2_USERNAME }}
-#           key: ${{ secrets.EC2_PRIVATE_KEY }}
-#           port: ${{ secrets.EC2_PORT }}
-#           script: |
-#             docker stop my-container || true
-#             docker rm my-container || true
-#             docker pull my-image:${{ steps.extract-tag.outputs.tags }}
-#             docker run -d --name my-container -p 80:80 my-image:${{ steps.extract-tag.outputs.tags }}
