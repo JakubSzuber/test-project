@@ -95,5 +95,7 @@ jobs:
         run: echo "siema"
       - name: Replace image tag
         run: |
+          ls
+          ll
           sed -i "s/image: "${TESTING_IMAGE}"/image: "${TESTING_IMAGEEE}"/g" manifests/deployment.yaml
 
