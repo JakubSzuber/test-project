@@ -22,7 +22,7 @@ env:
 
 jobs:
   # Only trigger if the previous workflow run was successful and the event was not a pull request
-  deploy-to-ec2:
+  deploy-to-ecs:
     if: >-
       github.event.workflow_run.conclusion == 'success' &&
       github.event.workflow_run.event != 'pull_request'
@@ -83,13 +83,17 @@ jobs:
           wait-for-service-stability: true
           
           # TODO add some smoke test maybe by codeguru or just simply use some command that will check the status of the task or do "curl" on container
-  demoprod:
+  change-manifests:  # TODO make this workflow changing the manifests files (their images' tags)
     runs-on: ubuntu-latest
-    needs: [deploy-to-ec2]
+    needs: [deploy-to-ecs]
     environment: 
       name: Production
-      url: https://pl.wikipedia.org/wiki  # You can add here public IPv4 of your task
+      url: https://pl.wikipedia.org/wiki  # You can add here public IPv4 of your app (production link)
 
     steps:
-      - name: Print the used tag
+      - name: Print the used tag  # TODO Change the k8s workflows
         run: echo "siema"
+      - name: Replace image tag
+        run: |
+          sed -i "s/image: "${TESTING_IMAGE}"/image: "${TESTING_IMAGEEE}"/g" manifests/deployment.yaml
+
