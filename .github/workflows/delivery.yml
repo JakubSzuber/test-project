@@ -93,9 +93,10 @@ jobs:
     steps:
       - name: Print the used tag  # TODO Change the k8s workflows
         run: echo "siema"
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Replace image tag
         run: |
           ls
-          ll
           sed -i "s/image: "${TESTING_IMAGE}"/image: "${TESTING_IMAGEEE}"/g" manifests/deployment.yaml
 
