@@ -88,7 +88,7 @@ jobs:
     needs: [deploy-to-ec2]
     environment: 
       name: Production
-      url: https://pl.wikipedia.org/wiki/Kot_domowy  # You can add here public IPv4 of your task
+      url: https://pl.wikipedia.org/wiki  # You can add here public IPv4 of your task
 
     steps:
       - name: Print the used tag
