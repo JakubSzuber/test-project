@@ -83,3 +83,13 @@ jobs:
           wait-for-service-stability: true
           
           # TODO add some smoke test maybe by codeguru or just simply use some command that will check the status of the task or do "curl" on container
+  demoprod:
+    runs-on: ubuntu-latest
+    needs: [deploy-to-ec2]
+    environment: 
+      name: Production
+      url: https://m.wsj.net/video/20180907/090718muskpot1/090718muskpot1_1920x1080.jpg  # You can add here public IPv4 of your task
+
+    steps:
+      - name: Print the used tag
+        run: echo "siema"
