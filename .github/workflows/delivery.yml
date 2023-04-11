@@ -74,13 +74,13 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
           image: docker.io/jakubszuber/testing_image:sha-${{ env.IMAGE_TAG }}  # Use just created image by the CI workflow
 
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1.4.11
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.ECS_SERVICE }}
-          cluster: ${{ env.ECS_CLUSTER }}
-          wait-for-service-stability: true
+#       - name: Deploy Amazon ECS task definition
+#         uses: aws-actions/amazon-ecs-deploy-task-definition@v1.4.11
+#         with:
+#           task-definition: ${{ steps.task-def.outputs.task-definition }}
+#           service: ${{ env.ECS_SERVICE }}
+#           cluster: ${{ env.ECS_CLUSTER }}
+#           wait-for-service-stability: true
           
           # TODO add some smoke test maybe by codeguru or just simply use some command that will check the status of the task or do "curl" on container
   change-manifests:  # TODO make this workflow changing the manifests files (their images' tags)
@@ -98,6 +98,6 @@ jobs:
       - name: Replace image tag
         run: |
           ls
-          sed -i "s/image: "${TESTING_IMAGE}"/image: "${TESTING_IMAGEEE}"/g" manifests/deployment.yaml
+          sed -i 's/image: "${TESTING_IMAGE}"/image: "${TESTING_IMAGEE}"/' manifests/deployment.yaml
           cat manifests/deployment.yaml
 
