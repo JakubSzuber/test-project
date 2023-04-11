@@ -99,4 +99,5 @@ jobs:
         run: |
           ls
           sed -i "s/image: "${TESTING_IMAGE}"/image: "${TESTING_IMAGEEE}"/g" manifests/deployment.yaml
+          cat manifests/deployment.yaml
 
