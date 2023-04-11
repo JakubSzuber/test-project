@@ -95,9 +95,13 @@ jobs:
         run: echo "siema"
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Replace image tag
+      - name: Replace image tag  # TODO evaluate below commands
         run: |
           ls
           sed -i 's/image: "${TESTING_IMAGE}"/image: "${TESTING_IMAGEE}"/' manifests/deployment.yaml
           cat manifests/deployment.yaml
-
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add manifests/deployment.yaml
+          git commit -m "XXX [skip actions]"
+          git push
