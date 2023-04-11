@@ -95,7 +95,7 @@ jobs:
         run: echo "siema"
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Replace image tag  # TODO evaluate below commands
+      - name: Replace image tag  # Git commands require granting the permissions for read and write for the workflow # TODO evaluate below commands
         run: |
           ls
           sed -i 's/image: "${TESTING_IMAGE}"/image: "${TESTING_IMAGEE}"/' manifests/deployment.yaml
