@@ -167,16 +167,12 @@ jobs:
             --no-lb
             --k3s-arg "--no-deploy=traefik,servicelb,metrics-server@server:*"
 
-      - name: Smoke test deployment in k3d Kubernetes  # TODO Evaluate below commands
+      - name: Smoke test deployment in k3d Kubernetes  # We use here the testing image from GitHub registry
         run: |
           kubectl create secret docker-registry regcred \
             --docker-server=https://ghcr.io \
             --docker-username=${{ github.actor }} \
             --docker-password=${{ secrets.GITHUB_TOKEN }}
-          ls
-          cat manifests/deployment.yaml
-          echo $GITHUB_RUN_ID | echo "error"
-          echo "$GITHUB_RUN_ID" | echo "error"
           sed -i "s/jakubszuber\/testing_image:sha-.*/ghcr.io\/jakubszuber\/testing_image:$GITHUB_RUN_ID/" manifests/deployment.yaml
           cat manifests/deployment.yaml
           kubectl apply -f manifests/deployment.yaml
