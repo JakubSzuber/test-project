@@ -20,5 +20,5 @@ spec:
         - name: regcred
       containers:
         - name: myapp
-          image: jakubszuber/testing_image:sha-2566a5b69261559cd06cbf65bf06a85c69674491
+          image: jakubszuber/testing_image:sha-3a32d04b5fe2e65e2f8693b63ba99e19b6a1062a
           imagePullPolicy: IfNotPresent
