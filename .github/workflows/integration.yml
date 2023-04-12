@@ -173,12 +173,15 @@ jobs:
 #             --docker-server=https://ghcr.io \
 #             --docker-username=${{ github.actor }} \
 #             --docker-password=${{ secrets.GITHUB_TOKEN }}
-#           export TESTING_IMAGE=ghcr.io/jakubszuber/testing_image:"$GITHUB_RUN_ID"
-#           envsubst < manifests/deployment.yaml  | kubectl apply -f -
+##          ls
+##          cat manifests/deployment.yaml
+#           sed -i 's/jakubszuber\/testing_image:sha-.*/ghcr.io\/jakubszuber\/testing_image:"$GITHUB_RUN_ID"/g' manifests/deployment.yaml
+##          cat manifests/deployment.yaml
+#           kubectl apply -f manifests/deployment.yaml
 #           kubectl rollout status deployment myapp
 #           sleep 15
 #           kubectl get all
-          
+
 #       - name: Test deployment
 #         run: |
 #           kubectl exec deploy/myapp -- curl --fail localhost
