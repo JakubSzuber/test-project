@@ -20,5 +20,5 @@ spec:
         - name: regcred
       containers:
         - name: myapp
-          image: "${TESTING_IMAGE}"
+          image: jakubszuber/testing_image:sha-2566a5b69261559cd06cbf65bf06a85c69674491
           imagePullPolicy: IfNotPresent
