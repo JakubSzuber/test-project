@@ -175,7 +175,9 @@ jobs:
             --docker-password=${{ secrets.GITHUB_TOKEN }}
           ls
           cat manifests/deployment.yaml
-          sed -i 's/jakubszuber\/testing_image:sha-.*/ghcr.io\/jakubszuber\/testing_image:"$GITHUB_RUN_ID"/' manifests/deployment.yaml
+          echo $GITHUB_RUN_ID | echo "error"
+          echo "$GITHUB_RUN_ID" | echo "error"
+          sed -i "s/jakubszuber\/testing_image:sha-.*/ghcr.io\/jakubszuber\/testing_image:$GITHUB_RUN_ID/" manifests/deployment.yaml
           cat manifests/deployment.yaml
           kubectl apply -f manifests/deployment.yaml
           kubectl rollout status deployment myapp
