@@ -19,5 +19,9 @@ jobs:
       MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
       PORT: 8080
     steps:
-      - name: XXX
+      - name: Print environmental variable 1
         run: echo "$PORT is the same as ${{ env.PORT }}"
+      - name: Print environmental variable 2
+        run: echo "Variable specific for the current step equals $COUNTER"
+        env: 
+          COUNTER: 1
