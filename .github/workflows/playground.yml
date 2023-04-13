@@ -20,6 +20,4 @@ jobs:
       PORT: 8080
     steps:
       - name: XXX
-        uses: echo "$PORT is the same as ${{ env.PORT }}"
-
- 
+        run: echo "$PORT is the same as ${{ env.PORT }}"
