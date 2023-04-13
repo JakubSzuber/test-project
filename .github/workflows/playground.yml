@@ -1,0 +1,25 @@
+name: Features
+
+on: [workflow_dispatch]
+
+env:
+  MONGODB_DB_NAME: gha-demo  # Environment variable on the general level of the workflow (every job within this workflow can use it)
+
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print the entire environmental variable "github" and use on it build-in function toJSON()
+        run: echo "${{ toJSON(github) }}"
+  test:
+    runs-on: ubuntu-latest
+    env:  # Environment variables on the job level (only "test" job can use them)
+      MONGODB_CLUSTER_ADDRESS: cluster0.ntrwp.mongodb.net
+      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
+      MONGODB_PASSWORD: ${{ secrets.MONGODB_PASSWORD }}
+      PORT: 8080
+    steps:
+      - name: XXX
+        uses: echo "$PORT is the same as ${{ env.PORT }}"
+
+ 
