@@ -29,4 +29,5 @@ jobs:
 #       - name: Build project
 #         run: npm run build
       - name: Print the communicate if the job have a BOOL variable
+        continue-on-error: true
         run: test ${{ matrix.BOOL }} = 'true' && echo "I have a boolean value with true values" 2>/dev/null
