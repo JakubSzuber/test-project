@@ -1,6 +1,6 @@
 name: Features
 
-on: push
+on: [workflow_dispatch]
 
 env: 
   BOOL: 'false'
