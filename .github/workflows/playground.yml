@@ -31,5 +31,5 @@ jobs:
         run: npm ci
 #       - name: Build project
 #         run: npm run build
-      - name: XXX
-        run: test $VAR1 = 'true' | echo "I have a boolean value $BOOL" || echo "I don't have a boolean value with true"
+      - name: Print the value of the variables BOOL
+        run: test $BOOL = 'true' | echo "I have a boolean value $BOOL" || echo "I don't have a boolean value with true"
