@@ -2,9 +2,6 @@ name: Features
 
 on: [workflow_dispatch]
 
-env: 
-  BOOL: 'false'
-
 jobs:
   build:
     continue-on-error: true  # Every step in this job will be treated in our workflow as it is successful even if it's not (so the execution of next jobs won't be interupted by this job and in GHA GUI we will always see the green check mark for this job (but not necessarily for the step/s))
@@ -32,4 +29,4 @@ jobs:
 #       - name: Build project
 #         run: npm run build
       - name: Print the value of the variables BOOL
-        run: test $VAR1 = 'true' && echo "I have a boolean value $BOOL" || echo "I don't have a boolean value with true"
+        run: test $BOOL = 'true' | echo "I have a boolean value $BOOL" || echo "I don't have a boolean value with true"
