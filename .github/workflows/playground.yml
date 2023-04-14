@@ -29,4 +29,4 @@ jobs:
 #       - name: Build project
 #         run: npm run build
       - name: Print the value of the variables BOOL
-        run: test $BOOL = 'true' | echo "I have a boolean value $BOOL" || echo "I don't have a boolean value with true"
+        run: echo "I have a boolean value "$BOOL"" || echo "I don't have a boolean value with true"
