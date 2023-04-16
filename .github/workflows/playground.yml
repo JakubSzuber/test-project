@@ -11,7 +11,7 @@ jobs:
     environment: testing
     runs-on: ubuntu-latest
     container:  # Run the current job in the container definied below. Btw. default registry is Docker Hub, if you want to use e.g. GHCR then use "ghcr.io/owner/image". Of course you can use your own image like e.g. "image: jakubszuber/testing_image"  # TODOOOOOOOO
-      image: node:16
+      image: jakubszuber/testing_image
 #       env:
 #         NODE_ENV: testing
 #       ports:
