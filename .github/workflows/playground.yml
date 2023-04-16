@@ -1,33 +1,66 @@
-name: Features
+name: Deployment (Container)
 
 on: [workflow_dispatch]
 
+env:
+  CACHE_KEY: node-deps
+  MONGODB_DB_NAME: gha-demo
+
 jobs:
-  build:
-    continue-on-error: true  # Every step in this job will be treated in our workflow as it is successful even if it's not (so the execution of next jobs won't be interupted by this job and in GHA GUI we will always see the green check mark for this job (but not necessarily for the step/s))
-    strategy:
-      matrix:  # The current job will be executed multiple time (6 times because it's a number of possible combinations of matrix values (6) plus additional job definied in "include:" and minus the specified combination from the pool of the combinations definied in "exclude:") in parallel and every job will have different combinations on matrix values e.g. there will be job that will run on ubuntu-latest and will install 12 node version, windows-latest and will install 12 node version, and so on. Btw. all of this "kinds" of workflows will be displayed witin the single job "build" in GHA GUI
-        node-version: [12, 14, 16]
-        operating-system: [ubuntu-latest, windows-latest]
-        include:
-          - node-version: 18
-            operating-system: ubuntu-latest
-            BOOL: 'true'
-        exclude:
-          - node-version: 12
-            operating-system: windows-latest
-    runs-on: ${{ matrix.operating-system }}
+  test:
+    environment: testing
+    runs-on: ubuntu-latest
+    container:  # Run the current job in the container definied below. Btw. default registry is Docker Hub, if you want to use e.g. GHCR then use "ghcr.io/owner/image". Of course you can use your own image like e.g. "image: jakubszuber/testing_image"  # TODOOOOOOOO
+      image: node:16
+      env:
+        NODE_ENV: testing
+      ports:
+        - 80
+      volumes:
+        - my_docker_volume:/volume_mount
+      options: --cpus 1
+    env:
+      MONGODB_CONNECTION_PROTOCOL: mongodb
+      MONGODB_CLUSTER_ADDRESS: mongodb  # TODOOOOOOOO If this job would be run normally (without containerizing) then you would have to give this variable a "127.0.0.1:27017" value instead of "mongodb" because if you run this job in a container (as it takes place in this example) then GHA creates a network environment where you can use the name of the service container that you specified in "services:", but remember this method of communication is possible only if you have containerized job
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: example
+      PORT: 8080
+    services:  # Create a service container for the current job so it will be available for all steps within this container
+      mongodb:
+        image: mongo  # Use "mongo" image with latest tag. Btw. default registry is Docker Hub, if you want to use e.g. GHCR then use "ghcr.io/owner/image". Of course you can use your own image like e.g. "image: jakubszuber/testing_image"
+        #ports:  # TODOOO If this job would be run normally (without containerizing) then you would have to uncomment those two lines
+          #- 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: example
     steps:
+      - name: Check for dockerenv file
+        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
       - name: Get Code
         uses: actions/checkout@v3
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
+      - name: Cache dependencies
+        uses: actions/cache@v3
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Install Dependencies
+          path: ~/.npm
+          key: ${{ env.CACHE_KEY }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
         run: npm ci
-#       - name: Build project
-#         run: npm run build
-      - name: Print the communicate if the job have a BOOL variable
-        continue-on-error: true
-        run: test ${{ matrix.BOOL }} = 'true' && echo "I have a boolean value with true values" 2>/dev/null
+      - name: Run server
+        run: npm start & npx wait-on http://127.0.0.1:$PORT # requires MongoDB Atlas to accept requests from anywhere!
+#       - name: Run tests
+#         run: npm test
+      - name: Output information
+        run: |
+          echo "MONGODB_USERNAME: $MONGODB_USERNAME"
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        env:
+          PORT: 3000
+        run: |
+          echo "Deploying (in real scenario)..."      
+          echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"
+          echo "MONGODB_USERNAME: $MONGODB_USERNAME"
+          echo "${{ env.PORT }}"
