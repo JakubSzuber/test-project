@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     container:  # Run the current job in the container definied below. Btw. default registry is Docker Hub, if you want to use e.g. GHCR then use "ghcr.io/owner/image". Of course you can use your own image like e.g. "image: jakubszuber/testing_image"  # TODOOOOOOOO
       image: node:16
-      env:
-        NODE_ENV: testing
-      ports:
-        - 80
-      volumes:
-        - my_docker_volume:/volume_mount
-      options: --cpus 1
+#       env:
+#         NODE_ENV: testing
+#       ports:
+#         - 80
+#       volumes:
+#         - my_docker_volume:/volume_mount
+#       options: --cpus 1
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb
       MONGODB_CLUSTER_ADDRESS: mongodb  # TODOOOOOOOO If this job would be run normally (without containerizing) then you would have to give this variable a "127.0.0.1:27017" value instead of "mongodb" because if you run this job in a container (as it takes place in this example) then GHA creates a network environment where you can use the name of the service container that you specified in "services:", but remember this method of communication is possible only if you have containerized job
