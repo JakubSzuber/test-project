@@ -95,6 +95,7 @@ jobs:
         run: echo "Changing the image's tag in the manifest to sha-${{ env.IMAGE_TAG }}"
       - name: Checkout
         uses: actions/checkout@v3
+      # TODO change later the manifest file to helm chart and use "helm upgrade" instead of "sed"
       - name: Replace image tag  # Git commands require granting the permissions for read and write for the workflow
         run: |
           echo "Menifest before change:" && cat manifests/deployment.yaml
