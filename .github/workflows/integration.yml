@@ -11,14 +11,12 @@ on:
     branches: [main]
     paths:
       - 'src/**'
-    paths-ignore:
-      - 'README.md'
+      - '!src/**/README.md'
   pull_request:
     branches: [main]
     paths:
       - 'src/**'
-    paths-ignore:
-      - 'README.md'
+      - '!src/**/README.md'
 
 jobs:
   lint:
