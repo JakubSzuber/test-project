@@ -9,10 +9,16 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+    paths:
+      - 'src/**'
     paths-ignore:
-      - 'README.md'
+      - '**/README.md/**'
   pull_request:
     branches: [main]
+    paths:
+      - 'src/**'
+    paths-ignore:
+      - '**/README.md/**'
 
 jobs:
   lint:
@@ -39,7 +45,7 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          FILTER_REGEX_EXCLUDE: .*/.github/workflows/integration.yml  # Exclude the workflow file
+          #FILTER_REGEX_EXCLUDE: .*/.github/workflows/.*  # Uncomment to exclude workflow files
 
   # This job could be executed through the ubuntu, windows, and macOS hosted runners but it require additional changes
   build-test-image:  
