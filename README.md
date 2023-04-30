@@ -7,5 +7,7 @@ Project for testing purposes
 
 write something about which and how Gitops deployment models ware implemented (push-base and pull-based)
 
+create github kanban "Project" and write about it on readme
+
 A pull request with prefix "dev_" is recommended to contribute to the repo.
 hello.!!!!!!!:)
