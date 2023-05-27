@@ -1,0 +1,28 @@
+name: Bug Report
+description: File a bug report
+title: "[Feature request]: "
+labels: ["request", "triage"]
+assignees:
+  - JakubSzuber
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: input
+    id: contact
+    attributes:
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: textarea
+    id: feature-idea
+    attributes:
+      label: What you want to be implemented in the future?
+      description: Also tell us, what you want to be implemented, improved, or changed in our project. Describe the idea, tell us why you want the change, and if you have any tips on how to bring that idea to life feel free to give hints!
+      placeholder: Give the idea
+      value: "Make a feature that..."
+    validations:
+      required: true
