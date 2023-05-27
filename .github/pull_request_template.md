@@ -1,17 +1,15 @@
 
 <!--## Pull Request summary
 
-Provide a brief summary of the changes in this PR=
+Provide a brief summary of the changes in this PR
 
 ### Checklist
 
-- [ ] Stakeholders approval
+- [ ] Stakeholder's approval
 - [ ] I have read and understood the contribution guidelines.
-- [ ] My code follows the project's coding style guidelines.
-- [ ] I have tested my changes and they function as expected.
+- [ ] I have tested my changes on my machine and they function as expected (if applicable).
 - [ ] I have updated the documentation (if applicable).
-- [ ] I have tested changes of the source code on my machine (if applicable).
-- [ ] My changes do not introduce any new linting errors or warnings.
+- [ ] My changes do not introduce any new linting errors, warnings, bugs, or security vulnerabilities.
 
 ### References (to any related issues or pull requests)
 
@@ -19,5 +17,4 @@ Provide a brief summary of the changes in this PR=
 
 ### Additional Notes/PR details
 
-Add any additional information, notes or more comprehensive description about the pull request 
--->
+Add any additional information, notes, or more comprehensive description of the pull request-->
