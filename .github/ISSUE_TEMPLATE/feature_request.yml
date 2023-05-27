@@ -1,6 +1,6 @@
-name: Bug Report
-description: File a bug report
-title: "[Feature request]: "
+name: Feature Request
+description: File a feature request
+title: "[Feature Request]: "
 labels: ["request", "triage"]
 assignees:
   - JakubSzuber
