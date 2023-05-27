@@ -1,14 +1,14 @@
 name: Feature Request
 description: File a feature request
 title: "[Feature Request]: "
-labels: ["request", "triage"]
+labels: ["feature", "triage"]
 assignees:
   - JakubSzuber
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
+        Thanks for taking the time to fill out this feature request!
   - type: input
     id: contact
     attributes:
@@ -22,7 +22,6 @@ body:
     attributes:
       label: What you want to be implemented in the future?
       description: Also tell us, what you want to be implemented, improved, or changed in our project. Describe the idea, tell us why you want the change, and if you have any tips on how to bring that idea to life feel free to give hints!
-      placeholder: Give the idea
-      value: "Make a feature that..."
+      placeholder: "Make a feature that..."
     validations:
       required: true
