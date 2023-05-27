@@ -1,7 +1,7 @@
 name: Typo Report
 description: File a typo report
 title: "[Typo]: "
-labels: ["documentacion", "triage"]
+labels: ["documentation", "triage"]
 assignees:
   - JakubSzuber
 body:
@@ -15,6 +15,7 @@ body:
       label: Specify which file has one or multiple typos
       description: In form of list, specify the paths of files on the repo that have typos?
       placeholder: "- /path/to/file\n- /path/to/file"
+      render: bash
     validations:
       required: true
   - type: textarea
