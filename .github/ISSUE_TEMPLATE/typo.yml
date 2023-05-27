@@ -1,1 +1,28 @@
-
+name: Typo Report
+description: File a typo report
+title: "[Typo]: "
+labels: ["documentacion", "triage"]
+assignees:
+  - JakubSzuber
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this typo report!
+  - type: textarea
+    id: typo-location
+    attributes:
+      label: Specify which file has one or multiple typos
+      description: In form of list, specify the paths of files on the repo that have typos?
+      placeholder: - /path/to/file
+                   - /path/to/file
+    validations:
+      required: true
+  - type: textarea
+    id: fixed-typo
+    attributes:
+      label: Paste the fixed content that was containing the typos
+      description: Paste here the fixed content of the changed by you file with code, markdown, etc.
+      placeholder: I do not have any typos now!
+    validations:
+      required: true
