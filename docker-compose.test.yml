@@ -21,7 +21,7 @@ services:
 #       - "80:80"
     depends_on:
       todo:
-        condition: service_started
+        condition: service_healthy
       postgres:
         condition: service_started  # TODO change to "service_healthy" after fixing the bug
     command: curl --fail http://todo:80 || exit 1
