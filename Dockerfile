@@ -46,7 +46,8 @@ FROM nginx:1.23-alpine-slim
 
 ## Update apk and add curl
 RUN apk update; \
-    apk add --no-cache curl
+    apk add --no-cache curl; \
+    apk add nodejs npm;
 
 # Copy config nginx
 COPY --from=build /app/.nginx/nginx.conf /etc/nginx/conf.d/default.conf
@@ -58,6 +59,9 @@ RUN rm -rf ./*
 
 # Copy static assets from builder stage
 COPY --from=build /app/build .
+
+# Copy the /app dir from builder stage in order to be able to do the unit tests
+COPY --from=build /app /test-app
 
 ## Add permissions
 RUN chown -R nginx:nginx /usr/share/nginx && \
