@@ -104,7 +104,7 @@ jobs:
       
       - name: Unit Testing in Docker
         run: |
-          docker run --rm ghcr.io/jakubszuber/testing_image:"$GITHUB_RUN_ID" nmp test  # TODO add CORRECTLY here  npm test
+          docker run --rm -it ghcr.io/jakubszuber/testing_image:"$GITHUB_RUN_ID" nmp test  # TODO add CORRECTLY here  npm test
 
   test-integration:
     name: Integration tests in Compose
