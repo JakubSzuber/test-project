@@ -17,8 +17,8 @@ services:
 
   service1:
     image: "${TESTING_IMAGE}"
-    ports:
-      - "80:80"
+#     ports:
+#       - "80:80"
     depends_on:
       todo:
         condition: service_started
