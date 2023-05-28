@@ -1,12 +1,75 @@
-FROM node:16
-# Later change to a lighter image
+# syntax=docker/dockerfile:1.4
 
+# 1. For build React app
+FROM node:lts AS development
+
+# Set working directory
 WORKDIR /app
 
-COPY package*.json index.js /app
+# 
+COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
 
+# Same as npm install
 RUN npm ci
 
-EXPOSE 80
+COPY . /app
 
-CMD ["node", "index.js"]
+ENV CI=true
+ENV PORT=3000
+
+CMD [ "npm", "start" ]
+
+FROM development AS build
+
+RUN npm run build
+
+
+FROM development as dev-envs
+RUN <<EOF
+apt-get update
+apt-get install -y --no-install-recommends git
+EOF
+
+RUN <<EOF
+useradd -s /bin/bash -m vscode
+groupadd docker
+usermod -aG docker vscode
+EOF
+# install Docker tools (cli, buildx, compose)
+COPY --from=gloursdocker/docker / /
+CMD [ "npm", "start" ]
+
+
+## Nginx lightweight alpine image
+FROM nginx:1.23-alpine-slim
+
+## Update apk and add curl
+RUN apk update; \
+    apk add --no-cache curl
+
+# Copy config nginx
+COPY --from=build /app/.nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+WORKDIR /usr/share/nginx/html
+
+# Remove default nginx static assets
+RUN rm -rf ./*
+
+# Copy static assets from builder stage
+COPY --from=build /app/build .
+
+## Add permissions
+RUN chown -R nginx:nginx /usr/share/nginx && \
+        chown -R nginx:nginx /var/cache/nginx && \
+        chown -R nginx:nginx /var/log/nginx && \
+        chown -R nginx:nginx /etc/nginx/conf.d
+RUN touch /var/run/nginx.pid && \
+        chown -R nginx:nginx /var/run/nginx.pid
+
+## Switch to non-root user
+USER nginx
+
+## Healthchecks
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost/ || exit 1
