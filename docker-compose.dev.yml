@@ -15,11 +15,11 @@ services:
       context: .
       # build to the stage named dev
       target: dev
-    volumes:
-      - .:/app
+#     volumes:
+#       - .:/app
     ports:
       # use "docker compose ps" to see which host port is used
-      - "80"
+      - "80:80"
     depends_on:
       postgres:
         condition: service_started  # TODO change to "service_healthy" after fixing the bug
