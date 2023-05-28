@@ -1,8 +1,8 @@
 services:
   todo:
     image: "${TESTING_IMAGE}"
-    # ports:
-    #   - "80:80"
+    ports:
+      - "80:80"
 
   postgres:
     image: postgres
