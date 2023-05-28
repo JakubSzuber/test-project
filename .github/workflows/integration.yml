@@ -243,6 +243,20 @@ jobs:
         with:
           sarif_file: 'trivy-results.sarif'
 
+      - name: Run Snyk to check Docker image for vulnerabilities
+        continue-on-error: true
+        uses: snyk/actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: ghcr.io/jakubszuber/testing_image:${{ github.run_id }}
+          args: --file=Dockerfile --severity-threshold=high
+
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
+
   build-final-image:
     name: Build Final Image
     needs: [lint, test-unit, test-integration, test-k3d, scan-image-Trivy]
