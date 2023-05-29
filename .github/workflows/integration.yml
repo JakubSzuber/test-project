@@ -181,7 +181,7 @@ jobs:
           cat manifests/deployment.yaml
           kubectl apply -f manifests/deployment.yaml
           kubectl rollout status deployment myapp
-          sleep 15
+          sleep 25
           kubectl get all
 
       - name: Test deployment
