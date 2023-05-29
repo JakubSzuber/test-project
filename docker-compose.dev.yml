@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres
+    image: postgres:15-alpine
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -9,17 +9,16 @@ services:
     healthcheck:
       test: /healthchecks/postgres-healthcheck
       interval: "5s"
-
-  service1:
+  frontend:
     build:
       context: .
-      # build to the stage named dev
-      target: dev
-#     volumes:
-#       - .:/app
+      target: dev-envs
+    container_name: frontend
     ports:
-      # use "docker compose ps" to see which host port is used
-      - "80:80"
+      - "80:3000"
+      - "3000:3000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       postgres:
         condition: service_started  # TODO change to "service_healthy" after fixing the bug
