@@ -317,11 +317,11 @@ jobs:
             type=semver,pattern={{major}}.{{minor}},value=v1.0.0
             type=ref,event=pr
             type=sha,format=long
+            type=schedule,pattern={{date 'YYYY-MM-DD HH mm ss' tz='Asia/Tokyo'}}
+            type=raw,value=raw_test
 #            type=schedule,pattern={{date 'YYYYMMDD'}}
 #            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}
 #            type=schedule,pattern={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}
-#            type=schedule,pattern={{date 'YYYY-MM-DD HH mm ss' tz='Asia/Tokyo'}}
-#            type=raw,value=raw_test
 
       # TODO Make sure that below part is fully logical
       - name: Build Docker image and push it to GHCR and Docker Hub if the event is direct push or merged pull request
