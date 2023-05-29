@@ -181,7 +181,7 @@ jobs:
           cat manifests/deployment.yaml
           kubectl apply -f manifests/deployment.yaml
           kubectl rollout status deployment myapp
-          sleep 25
+          sleep 15
           kubectl get all
 
       - name: Test deployment
@@ -317,11 +317,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}},value=v1.0.0
             type=ref,event=pr
             type=sha,format=long
-            type=schedule,pattern={{date 'YYYY-MM-DD HH mm ss' tz='Asia/Tokyo'}}
-            type=raw,value=raw_test
-            type=schedule,pattern={{date 'YYYYMMDD'}}
-            type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}
-            type=schedule,pattern={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}
+            type=raw,value=stable-{{date 'YYYYMMDD'}}-{{sha}},enable={{is_default_branch}}
 
       # TODO Make sure that below part is fully logical
       - name: Build Docker image and push it to GHCR and Docker Hub if the event is direct push or merged pull request
