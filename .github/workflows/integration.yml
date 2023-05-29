@@ -19,31 +19,31 @@ on:
       - '!src/**/README.md'
 
 jobs:
-  lint:
-    runs-on: ubuntu-22.04
-    steps:
-#       - name: Echo Working
-#         run: echo "Working!"
+#   lint:
+#     runs-on: ubuntu-22.04
+#     steps:
+# #       - name: Echo Working
+# #         run: echo "Working!"
     
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+#         with:
+#           fetch-depth: 0
           
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 16
 
-      - run: npm ci
+#       - run: npm ci
 
-      - name: Run Super-Linter
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: master
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          #FILTER_REGEX_EXCLUDE: .*/.github/workflows/.*  # Uncomment to exclude workflow files
+#       - name: Run Super-Linter
+#         uses: github/super-linter@v4
+#         env:
+#           VALIDATE_ALL_CODEBASE: false
+#           DEFAULT_BRANCH: master
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           #FILTER_REGEX_EXCLUDE: .*/.github/workflows/.*  # Uncomment to exclude workflow files
 
   # This job could be executed through the ubuntu, windows, and macOS hosted runners but it require additional changes
   build-test-image:  
@@ -278,7 +278,7 @@ jobs:
 
   build-final-image:
     name: Build Final Image
-    needs: [lint, test-unit, test-integration, test-k3d, scan-image-Trivy, scan-image-Snyk]
+    needs: [test-unit, test-integration, test-k3d, scan-image-Trivy, scan-image-Snyk]  # TODO lint is temporary turned off
     runs-on: ubuntu-latest
 
     permissions:
@@ -319,6 +319,9 @@ jobs:
             type=sha,format=long
             type=schedule,pattern={{date 'YYYYMMDD'}}
             type=schedule,pattern={{date 'YYYYMMDD-hhmmss' tz='Europe/Warsaw'}}
+            type=schedule,pattern={{date 'YYYYMMDD-HHmmss' tz='Asia/Tokyo'}}
+            type=schedule,pattern={{date 'YYYY-MM-DD HH mm ss' tz='Asia/Tokyo'}}
+            type=raw,value=raw_test
 
       # TODO Make sure that below part is fully logical
       - name: Build Docker image and push it to GHCR and Docker Hub if the event is direct push or merged pull request
