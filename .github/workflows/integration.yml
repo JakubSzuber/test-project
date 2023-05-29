@@ -276,6 +276,31 @@ jobs:
         with:
           sarif_file: snyk.sarif
 
+# TODO Uncomment below and move the below two lines, uncomment and configure rest of below part and setup datree on teh datree website when you will have implemented helm
+# env:
+#   DATREE_TOKEN: ${{ secrets.DATREE_TOKEN }}
+
+#   Datreek8sPolicyCheck:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+
+#       - name: Run Datree Policy Check
+#         uses: datreeio/action-datree@main
+#         with:
+#           path: 'RELATIVE PATH TO ChartDirectory'
+#           cliArguments: ''
+#           isHelmChart: true
+#           helmArguments: '--values values.yaml'
+
+#       - name: Upload analysis results to GitHub
+#         uses: github/codeql-action/upload-sarif@v2
+#         with:
+#           sarif_file: datree.sarif
+#           wait-for-processing: true
+
   build-final-image:
     name: Build Final Image
     needs: [test-unit, test-integration, test-k3d, scan-image-Trivy, scan-image-Snyk]  # TODO lint is temporary turned off
