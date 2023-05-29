@@ -18,6 +18,9 @@ on:
       - 'src/**'
       - '!src/**/README.md'
 
+env:
+  AWS_REGION: us-east-2
+
 jobs:
 #   lint:
 #     runs-on: ubuntu-22.04
@@ -188,6 +191,48 @@ jobs:
         run: |
           kubectl exec deploy/myapp -- curl --fail localhost
 
+#   #TODO you can add CodeGuru but this will require cosme configuration like e.g. s3 bucket creating, further permission scope, etc
+#   #TODO If you want to add this part write a notes in github_actions.md 
+#   #TODO tutorial https://www.youtube.com/watch?v=czlx4iixe0Y
+#   scan-artifact-AWS-CodeGuru:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: read    # This is required for actions/checkout
+#       id-token: write   # This is required for requesting the JWT
+#       packages: read  # Obtain permission needed to push docker image to ghcr.io
+#       security-events: write  # Obtain permission needed for github/codeql-action/upload-sarif to upload SARIF results
+
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
+#       with:
+#         fetch-depth: 0
+
+#     - uses: actions/setup-node@v3
+#       with:
+#         node-version: 18
+
+#     - run: npm build
+
+#     # TODO change the scope of permission to ise OpenID
+#     - name: Configure AWS credentials
+#       uses: aws-actions/configure-aws-credentials@v2
+#       with:
+#         role-to-assume: arn:aws:iam::152691795422:role/gh-action-role
+#         role-session-name: samplerolesession
+#         aws-region: ${{ env.AWS_REGION }}
+
+#     - name: CodeGuru Reviewer
+#       uses: aws-actions/codeguru-reviewer@v1.1
+#       with:
+#         build_path: build  # Build artifact(s) directory
+#         s3_bucket: SPECIFY S3 BUCKET WITH RIGHT PREFIX  # S3 Bucket with "codeguru-reviewer-*" prefix
+
+#     - name: Upload review result
+#       uses: github/codeql-action/upload-sarif@v1
+#       with:
+#         sarif_file: codeguru-results.sarif.json
+
   scan-image-Trivy:
     name: Scan Image with Trivy
     needs: [build-test-image]
@@ -303,7 +348,7 @@ jobs:
 
   build-final-image:
     name: Build Final Image
-    # TODO later add "Datreek8sPolicyCheck"
+    # TODO later add "Datreek8sPolicyCheck" and "scan-artifact-AWS-CodeGuru"
     needs: [test-unit, test-integration, test-k3d, scan-image-Trivy, scan-image-Snyk]  # TODO lint is temporary turned off
     runs-on: ubuntu-latest
 
