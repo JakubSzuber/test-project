@@ -303,6 +303,7 @@ jobs:
 
   build-final-image:
     name: Build Final Image
+    # TODO later add "Datreek8sPolicyCheck"
     needs: [test-unit, test-integration, test-k3d, scan-image-Trivy, scan-image-Snyk]  # TODO lint is temporary turned off
     runs-on: ubuntu-latest
 
