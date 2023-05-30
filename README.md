@@ -5,7 +5,7 @@
 
 Project for testing purposes
 
-XXXTo dev work with this, after cloning the repo use `docker compose -f docker-compose.dev.yml up -d --build` for the initial setup and after each change to source code.
+XXXTo dev work after cloning the repo use `docker compose -f docker-compose.dev.yml up -d --build` for the initial setup and then you can just start coding (the changes will be applied after each save).localhost:80 or localhost:3000 and in order to debug xxx
 
 write something about which and how Gitops deployment models ware implemented (push-base and pull-based)
 
