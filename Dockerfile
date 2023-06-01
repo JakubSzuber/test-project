@@ -1,19 +1,20 @@
 # syntax=docker/dockerfile:1.4
 
 # 1. For build React app
-FROM node:lts AS development
+FROM node:20.2.0-bullseye-slim AS development
 
 # Set working directory
+RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
 
-# 
-COPY package.json /app/package.json
-COPY package-lock.json /app/package-lock.json
+# Copy package.json and package-lock.json to container
+COPY --chown=node:node package.json /app/package.json
+COPY --chown=node:node package-lock.json /app/package-lock.json
 
 # Same as npm install
-RUN npm ci
+RUN npm ci && npm cache clean --force
 
-COPY . /app
+COPY --chown=node:node . /app
 
 ENV CI=true
 ENV PORT=3000
@@ -26,6 +27,10 @@ RUN npm run build
 
 
 FROM development as dev-envs
+
+ENV PATH /app/node_modules/.bin:$PATH
+ENV NODE_ENV=development
+
 RUN apt-get update && apt-get install -y --no-install-recommends git
 
 RUN useradd -s /bin/bash -m vscode && \
@@ -34,6 +39,10 @@ usermod -aG docker vscode
 
 # install Docker tools (cli, buildx, compose)
 COPY --from=gloursdocker/docker / /
+
+RUN npm install && npm cache clean --force
+RUN npm install react-scripts@5.0.0 -g
+
 CMD [ "npm", "start" ]
 
 
