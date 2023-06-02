@@ -460,6 +460,6 @@ jobs:
                   "text": "<${{ github.event.pull_request._links.html.href }}|View Pull Request>"
                 }
               }]
-            }     
+            }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
