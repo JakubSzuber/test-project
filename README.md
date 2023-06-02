@@ -5,7 +5,8 @@
 
 Project for testing purposes
 
-XXXTo dev work after cloning the repo use `docker compose -f docker-compose.dev.yml up -d --build` for the initial setup and then you can just start coding (the changes will be applied after each save).localhost:80 or localhost:3000 and in order to debug xxx
+XXXTo dev work after cloning the repo use `docker compose -f docker-compose.dev.yml up -d --build` for the initial setup and then you can just start coding (the changes will be applied after each save).localhost:80 or localhost:3000
+XXXIn order to debug code in VSC make sure that you have [.vscode/launch.json](https://github.com/JakubSzuber/test-project/blob/main/.vscode/launch.json) from that project.
 
 write something about which and how Gitops deployment models ware implemented (push-base and pull-based)
 
