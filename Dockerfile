@@ -41,9 +41,9 @@ usermod -aG docker vscode
 COPY --from=gloursdocker/docker / /
 
 RUN npm install && npm cache clean --force
-RUN npm install react-scripts@5.0.0 -g
+RUN npm install -g nodemon
 
-CMD [ "npm", "start" ]
+CMD [ "nodemon", "--inspect=0.0.0.0:9229"]
 
 
 ## Nginx lightweight alpine image
