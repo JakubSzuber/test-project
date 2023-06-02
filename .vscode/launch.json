@@ -2,15 +2,14 @@
     "version": "0.2.0",
     "configurations": [
       {
-        "name": "Docker: Attach to Node",
-        "type": "node",
-        "request": "attach",
-        "remoteRoot": "/app",
-        "port": 9229,
-        "address": "localhost",
-        "localRoot": "${workspaceFolder}",
-        "protocol": "inspector",
-        "restart": true
-    }
+        "name": "Debug Docker-React",
+        "type": "chrome",
+        "request": "launch",
+        "url": "http://localhost",
+        "webRoot": "${workspaceFolder}/src",
+        "sourceMapPathOverrides": {
+          "/app/src/*": "${webRoot}/*"
+        }
+      }
     ]
 }
