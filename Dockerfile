@@ -4,22 +4,22 @@
 FROM node:20.2.0-bullseye-slim AS development
 
 # Set working directory
-RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
 
 # Copy package.json and package-lock.json to container
-COPY --chown=node:node package.json /app/package.json
-COPY --chown=node:node package-lock.json /app/package-lock.json
+COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
 
 # Same as npm install
 RUN npm ci && npm cache clean --force
 
-COPY --chown=node:node . /app
+COPY . /app
 
 ENV CI=true
 ENV PORT=3000
 
 CMD [ "npm", "start" ]
+
 
 FROM development AS build
 
@@ -37,7 +37,7 @@ RUN useradd -s /bin/bash -m vscode && \
 groupadd docker && \
 usermod -aG docker vscode
 
-# install Docker tools (cli, buildx, compose)
+# Install Docker tools (cli, buildx, compose)
 COPY --from=gloursdocker/docker / /
 
 RUN npm install && npm cache clean --force
