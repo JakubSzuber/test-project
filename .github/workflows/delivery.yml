@@ -1,6 +1,8 @@
 ---
 # Deploy to staging environment and do smoke tests
 
+# TODO zastanow sie jaki serwis aws uzyc jako staging environmrnt. Najprawdopodobmniej bedzie to EC2 albo ECS z EC2. Decyzja bedzie zalezec glownie od ceny oraz czy mozna latwo otrzymac publiczne ip resourca, ale nie tylko od tych czynnikow
+
 name: CD
 
 cconcurrency: staging
