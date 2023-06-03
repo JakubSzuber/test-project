@@ -439,7 +439,7 @@ jobs:
       - name: TEST1
         run: |
           if [[ "$STAT" == "skipped" ]]; then
-            echo "::set-env name=STAT::failure"
+            STAT=failure
           fi
       - name: TEST
         run: |
