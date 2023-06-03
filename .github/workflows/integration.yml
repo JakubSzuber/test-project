@@ -46,6 +46,8 @@ jobs:
         env:
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false  # TODO This line should be set only if the repository is first properly linted before first usage of this line
+          #FILTER_REGEX_INCLUDE: .*src/.*  # Uncomment to inlude only files within /src
           #FILTER_REGEX_EXCLUDE: .*/.github/workflows/.*  # Uncomment to exclude workflow files
 
   # This job could be executed through the ubuntu, windows, and macOS hosted runners but it require additional changes
