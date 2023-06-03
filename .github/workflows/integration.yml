@@ -431,6 +431,7 @@ jobs:
     # Setup guide https://github.com/marketplace/actions/slack-send#technique-3-slack-incoming-webhook
     name: Notify Slack
     needs: [build-final-image]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - uses: 8398a7/action-slack@v3
