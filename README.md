@@ -13,4 +13,7 @@ write something about which and how Gitops deployment models ware implemented (p
 create github kanban "Project" and write about it on readme
 
 A pull request with prefix "dev_" is recommended to contribute to the repo.
+
+TODO ogarnij todo z moich workflow'sow i z notatek
+
 hello.!!!!!!!:)
