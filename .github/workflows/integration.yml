@@ -439,7 +439,7 @@ jobs:
       - name: TEST1
         run: |
           if [[ "$STAT" == "skipped" ]]; then
-            STAT=failure
+            echo "STAT=failure" >> "$GITHUB_ENV"
           fi
       - name: TEST
         run: |
