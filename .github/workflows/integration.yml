@@ -434,6 +434,9 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
+      - name: TEST
+        run: |
+          echo "Deploy result: ${{ needs.build-final-image.result }}"
       - uses: 8398a7/action-slack@v3
         with:
           status: ${{ needs.build-final-image.result }}
