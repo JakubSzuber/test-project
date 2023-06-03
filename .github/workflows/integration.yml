@@ -436,7 +436,7 @@ jobs:
     steps:
       - uses: 8398a7/action-slack@v3
         with:
-          status: ${{ jobs.build-final-image.status }}
+          status: ${{ jobs.build-final-image.result }}
           fields: repo,message,author,commit,action,eventName,ref,workflow,job,took,pullRequest
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
