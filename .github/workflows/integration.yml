@@ -444,9 +444,10 @@ jobs:
       - name: TEST
         run: |
           echo "$STAT"
+          echo ${{ env.STAT }}
       - uses: 8398a7/action-slack@v3
         with:
-          status: $STAT
+          status: ${{ env.STAT }}
           fields: repo,message,author,commit,action,eventName,ref,workflow,job,took,pullRequest
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
