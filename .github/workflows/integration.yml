@@ -433,13 +433,20 @@ jobs:
     needs: [build-final-image]
     if: always()
     runs-on: ubuntu-latest
+    env: 
+      STAT: ${{ needs.build-final-image.result }}
     steps:
+      - name: TEST1
+        run: |
+          if [[ "$STAT" == "skipped" ]]; then
+            echo "::set-env name=STAT::failure"
+          fi
       - name: TEST
         run: |
-          echo "Deploy result: ${{ needs.build-final-image.result }}"
+          echo "$STAT"
       - uses: 8398a7/action-slack@v3
         with:
-          status: ${{ needs.build-final-image.result }}
+          status: $STAT
           fields: repo,message,author,commit,action,eventName,ref,workflow,job,took,pullRequest
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
