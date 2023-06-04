@@ -10,6 +10,8 @@ XXXIn order to debug code in VSC make sure that you have [.vscode/launch.json](h
 
 write something about which and how Gitops deployment models ware implemented (push-base and pull-based)
 
+write something about which git branching strategy is used in this repo (probably feature branches)
+
 create github kanban "Project" and write about it on readme
 
 A pull request with prefix "dev_" is recommended to contribute to the repo.
