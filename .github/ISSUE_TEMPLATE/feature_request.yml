@@ -25,6 +25,19 @@ body:
       placeholder: "Make a feature that..."
     validations:
       required: true
+   - type: textarea
+    id: tf-references
+    attributes:
+      label: References
+      description: |
+        Are there any other GitHub issues, whether open or closed, that are related to the problem you've described above or to the suggested solution? If so, please create a list below that mentions each of them. For example:
+        ```
+          - #6017
+        ```
+      placeholder:
+      value:
+    validations:
+      required: false
   - type: dropdown
     id: idea-type
     attributes:
