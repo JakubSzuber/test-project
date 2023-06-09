@@ -76,7 +76,7 @@ body:
       label: Additional Context
       description: |
         Are there anything atypical about your situation that we should know?
-        For example: is Terraform running in a wrapper script or in a CI system? Are you passing any unusual command line options or environment variables to opt-in to non-default behavior?"
+        For example: is Terraform running in a wrapper script or in a CI system? Are you passing any unusual command line options or environment variables to opt-in to non-default behavior?
       placeholder: Additional context...
       value:
     validations:
