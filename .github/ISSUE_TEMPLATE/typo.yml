@@ -18,6 +18,7 @@ body:
       render: markdown
     validations:
       required: true
+
   - type: textarea
     id: fixed-typo
     attributes:
@@ -26,3 +27,17 @@ body:
       placeholder: I do not have any typos now!
     validations:
       required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: References
+      description: |
+        Are there any other open or closed GitHub issues related to the problem or solution you described? If so, list them below. For example:
+        ```
+          - #6017
+        ```
+      placeholder:
+      value:
+    validations:
+      required: false
