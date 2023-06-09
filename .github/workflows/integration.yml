@@ -5,7 +5,7 @@ name: CI
 
 concurrency: development
 
-on:  # TODO Change the trigger events' logic (or leave if you are sure it's ok (but it's probably not)). Meybe add (not change, add) that branch have to start with "dev_" 
+on:  # TODO Change the trigger events' logic (or leave if you are sure it's ok (but it's probably not)). Meybe do that branch have to start with "dev_" or branch main but only for /src
   workflow_dispatch:
   push:
     branches: [main]
