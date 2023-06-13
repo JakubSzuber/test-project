@@ -7,16 +7,16 @@ concurrency: development
 
 on:  # TODO Change the trigger events' logic (or leave if you are sure it's ok (but it's probably not)). Meybe do that branch have to start with "dev_" or branch main but only for /src
   workflow_dispatch:
-#   push:
-#     branches: [main]
-#     paths:
-#       - 'src/**'
-#       - '!src/**/README.md'
-#   pull_request:
-#     branches: [main]
-#     paths:
-#       - 'src/**'
-#       - '!src/**/README.md'
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - '!src/**/README.md'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - '!src/**/README.md'
 
 env:
   AWS_REGION: us-east-2
