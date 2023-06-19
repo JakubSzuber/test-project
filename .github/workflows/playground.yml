@@ -4,15 +4,15 @@ name: Features
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
+      somechoice:
+        description: 'Some choice'
         required: true
-        default: 'warning'
+        default: 'one'
         type: choice
         options:
-          - info
-          - warning
-          - debug
+          - one
+          - two
+          - three
       print_tags:
         description: 'True to print to STDOUT'
         required: true
@@ -32,4 +32,4 @@ jobs:
     if:  ${{ inputs.print_tags }} 
     steps:
       - name: Print the input tag to STDOUT
-        run: echo  The tags are ${{ inputs.tags }} 
+        run: echo  The tags are ${{ inputs.tags }} and some choice is ${{ inputs.somechoice }}
