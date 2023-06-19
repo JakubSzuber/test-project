@@ -1,65 +1,35 @@
-name: Deployment (Container)
+---
+name: Features
 
-on: [workflow_dispatch]
-
-env:
-  CACHE_KEY: node-deps
-  MONGODB_DB_NAME: gha-demo
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      print_tags:
+        description: 'True to print to STDOUT'
+        required: true
+        type: boolean
+      tags:
+        description: 'Test scenario tags'
+        required: true
+        type: string
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
 
 jobs:
-  test:
+  print-tag:
     runs-on: ubuntu-latest
-    container:  # Run the current job in the container definied below. Btw. default registry is Docker Hub, if you want to use e.g. GHCR then use "ghcr.io/owner/image". Of course you can use your own image like e.g. "image: jakubszuber/testing_image"  # TODOOOOOOOO
-      image: jakubszuber/testing_image
-#       env:
-#         NODE_ENV: testing
-#       ports:
-#         - 80
-#       volumes:
-#         - my_docker_volume:/volume_mount
-#       options: --cpus 1
-    env:
-      MONGODB_CONNECTION_PROTOCOL: mongodb
-      MONGODB_CLUSTER_ADDRESS: mongodb  # TODOOOOOOOO If this job would be run normally (without containerizing) then you would have to give this variable a "127.0.0.1:27017" value instead of "mongodb" because if you run this job in a container (as it takes place in this example) then GHA creates a network environment where you can use the name of the service container that you specified in "services:", but remember this method of communication is possible only if you have containerized job
-      MONGODB_USERNAME: root
-      MONGODB_PASSWORD: example
-      PORT: 8080
-    services:  # Create a service container for the current job so it will be available for all steps within this container
-      mongodb:
-        image: mongo  # Use "mongo" image with latest tag. Btw. default registry is Docker Hub, if you want to use e.g. GHCR then use "ghcr.io/owner/image". Of course you can use your own image like e.g. "image: jakubszuber/testing_image"
-        #ports:  # TODOOO If this job would be run normally (without containerizing) then you would have to uncomment those two lines
-          #- 27017:27017
-        env:
-          MONGO_INITDB_ROOT_USERNAME: root
-          MONGO_INITDB_ROOT_PASSWORD: example
+    if:  ${{ inputs.print_tags }} 
     steps:
-      - name: Check for dockerenv file
-        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
-      - name: Get Code
-        uses: actions/checkout@v3
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ env.CACHE_KEY }}-${{ hashFiles('**/package-lock.json') }}
-      - name: Install dependencies
-        run: npm ci
-      - name: Run server
-        run: npm start & npx wait-on http://127.0.0.1:$PORT # requires MongoDB Atlas to accept requests from anywhere!
-#       - name: Run tests
-#         run: npm test
-      - name: Output information
-        run: |
-          echo "MONGODB_USERNAME: $MONGODB_USERNAME"
-  deploy:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Output information
-        env:
-          PORT: 3000
-        run: |
-          echo "Deploying (in real scenario)..."      
-          echo "MONGODB_DB_NAME: $MONGODB_DB_NAME"
-          echo "MONGODB_USERNAME: $MONGODB_USERNAME"
-          echo "${{ env.PORT }}"
+      - name: Print the input tag to STDOUT
+        run: echo  The tags are ${{ inputs.tags }} 
