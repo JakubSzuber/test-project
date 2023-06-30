@@ -49,9 +49,10 @@ jobs:
 #        if: steps.list-changed.outputs.changed == 'true'
         run: ct install --target-branch ${{ github.event.repository.default_branch }}
         
-#       - name: TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-# #        if: steps.list-changed.outputs.changed == 'true'
-#         run: |
-#           kubectl exec deploy/golden-devops-helm-release --namespace=staging-namespace -- curl --fail localhost || echo "nie1"
-#           helm test golden-devops-helm-release || echo "Testing of Helm golden-devops-helm-release failed!"
-#           kubectl logs golden-devops-helm-release-connection-test --namespace=staging-namespace
+      - name: TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+#        if: steps.list-changed.outputs.changed == 'true'
+        run: |
+          helm install golden-devops-helm-release helm-chart --values helm-chart/values.yaml -f helm-chart/values-prod.yaml
+          kubectl exec deploy/golden-devops-helm-release --namespace=staging-namespace -- curl --fail localhost || echo "nie1"
+          helm test golden-devops-helm-release || echo "Testing of Helm golden-devops-helm-release failed!"
+          kubectl logs golden-devops-helm-release-connection-test --namespace=staging-namespace
