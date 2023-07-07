@@ -24,8 +24,8 @@ spec:
         - name: {{ .Values.appName }}
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           imagePullPolicy: IfNotPresent
-          ports:
-          - containerPort: 80
+          # ports:
+          # - containerPort: 80
           envFrom:
           - configMapRef:
               name: {{ .Values.configmap.name }}
