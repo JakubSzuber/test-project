@@ -6,8 +6,8 @@ metadata:
     namespace: {{ .Values.namespace }}
     labels:
         app: {{ .Values.appName }}
-    annotations:
-        service.beta.kubernetes.io/aws-load-balancer-type: "elb"
+    # annotations:
+    #     service.beta.kubernetes.io/aws-load-balancer-type: "elb"
 spec:
     ports:
       - protocol: TCP
