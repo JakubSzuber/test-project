@@ -5,7 +5,7 @@ metadata:
     name: {{ .Values.appName }}
     namespace: {{ .Values.namespace }}
     labels:
-    #     app: {{ .Values.appName }}
+        app: {{ .Values.appName }}
     # annotations:
     #     service.beta.kubernetes.io/aws-load-balancer-type: "elb"
 spec:
