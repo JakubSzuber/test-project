@@ -188,7 +188,7 @@ jobs:
 
       - name: Test deployment
         run: |
-          kubectl exec deploy/myapp -- curl --fail localhost
+          kubectl exec deploy/myapp -- curl --fail localhost:8080
 
 #   #TODO you can add CodeGuru but this will require cosme configuration like e.g. s3 bucket creating, further permission scope, etc
 #   #TODO If you want to add this part write a notes in github_actions.md 
