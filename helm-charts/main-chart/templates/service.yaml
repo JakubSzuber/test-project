@@ -10,8 +10,8 @@ metadata:
   namespace: {{ .Values.namespace }}
 spec:
   ports:
-  - name: "443"
-    port: 443
+  - name: "80"
+    port: 80
     protocol: TCP
     targetPort: 8080
   selector:
