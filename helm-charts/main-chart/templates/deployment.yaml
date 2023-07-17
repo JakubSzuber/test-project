@@ -37,3 +37,12 @@ spec:
             limits:
               memory: "2Gi"
               cpu: "1"
+          volumeMounts:
+          - name: tls
+            mountPath: /etc/nginx/tls
+            readOnly: true
+      volumes:
+      - name: tls
+        secret:
+          secretName: nginx-tls-secret
+
