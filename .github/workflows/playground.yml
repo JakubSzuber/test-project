@@ -60,8 +60,6 @@ jobs:
           scan-type: 'fs'
           #ignore-unfixed: true
           exit-code: 1
-          format: 'sarif'
-          output: 'trivy-results.sarif'
           severity: 'CRITICAL'
 
       - name: Run Trivy vulnerability scanner in repo mode
