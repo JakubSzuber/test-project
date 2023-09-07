@@ -36,6 +36,7 @@ jobs:
     steps:
       - name: Print the input tag to STDOUT
         run: echo  The tags are ${{ inputs.tags }} and some choice is ${{ inputs.somechoice }}
+
   scan-image-Trivy:
     name: Scan Helm chart with Trivy
     runs-on: ubuntu-latest
@@ -59,14 +60,14 @@ jobs:
 #          python-version: 3.7
 
       # Gain an additional overview of the vulnerabilities
-#      - name: Run Trivy for all CVEs (non-blocking)
-#        uses: aquasecurity/trivy-action@master
-#        with:
-#          scan-type: 'config'
-#          hide-progress: false
-#          scan-ref: 'helm-charts/main-chart'
-#          exit-code: 0
-#          format: table
+      - name: Run Trivy for all CVEs (non-blocking)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          hide-progress: false
+          scan-ref: 'helm-charts/main-chart'
+          exit-code: 0
+          format: table
 
       - name: Run Trivy for all CVEs (blocking)
         uses: aquasecurity/trivy-action@master
@@ -84,9 +85,10 @@ jobs:
           scan-type: 'config'
           hide-progress: false
           scan-ref: 'helm-charts/main-chart'
+          vuln-type: 'os,library'
           exit-code: 0
           ignore-unfixed: true
-          severity: 'HIGH'
+          severity: 'HIGH,CRITICAL'
           format: 'sarif'
           output: 'trivy-results.sarif'
 
