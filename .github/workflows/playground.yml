@@ -48,49 +48,30 @@ jobs:
       - name: Checkout git repo
         uses: actions/checkout@v3
 
-# TODO TEST IS THIS REQUIRED
-#      - name: Set up Helm
-#        uses: azure/setup-helm@f382f75448129b3be48f8121b9857be18d815a82 # tag=v3.4
-#        with:
-#          version: v3.6.3
-#
-#      - name: Set up python
-#        uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984 # tag=v4.3.0
-#        with:
-#          python-version: 3.7
-
-      # Gain an additional overview of the vulnerabilities
-      - name: Run Trivy for all CVEs (non-blocking)
+      - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'config'
-          hide-progress: false
-          scan-ref: 'helm-charts/main-chart'
-          exit-code: 0
-          format: table
+          scan-type: 'fs'
+          #ignore-unfixed: true
 
-      - name: Run Trivy for all CVEs (blocking)
+      - name: Run Trivy vulnerability scanner in repo mode
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'config'
-          hide-progress: false
-          scan-ref: 'helm-charts/main-chart'
+          scan-type: 'fs'
+          #ignore-unfixed: true
           exit-code: 1
-          severity: 'CRITICAL'
-          format: table 
-
-      - name: Run Trivy for HIGH CVEs and report
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: 'config'
-          hide-progress: false
-          scan-ref: 'helm-charts/main-chart'
-          vuln-type: 'os,library'
-          exit-code: 0
-          ignore-unfixed: true
-          severity: 'HIGH,CRITICAL'
           format: 'sarif'
           output: 'trivy-results.sarif'
+          severity: 'CRITICAL'
+
+      - name: Run Trivy vulnerability scanner in repo mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          #ignore-unfixed: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'HIGH'
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v2
