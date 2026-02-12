@@ -47,7 +47,7 @@ CMD [ "nodemon", "--inspect=0.0.0.0:9229"]
 
 
 ## Nginx unprivileged debian image
-FROM nginxinc/nginx-unprivileged:1.25
+FROM nginxinc/nginx-unprivileged:1.29.3
 
 ## Switch to root user for setup
 USER root
